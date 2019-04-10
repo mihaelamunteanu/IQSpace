@@ -1,0 +1,1 @@
+"C:\Program Files\Java\jre1.8.0_202\bin\java.exe" -Xmx100m -classpath ./lib/IQSpaceTest.jar;./lib/postgresql-42.2.5.jar com.codeprehend.iqspace.IQSpaceLauncher
