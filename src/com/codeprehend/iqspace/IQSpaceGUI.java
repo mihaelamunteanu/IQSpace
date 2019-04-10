@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 import com.codeprehend.iqspace.panels.QuestionPanel;
 import com.codeprehend.iqspace.panels.ResultPanel;
 import com.codeprehend.iqspace.resources.Antecedent;
-import com.codeprehend.iqspace.resources.Examination;
 import com.codeprehend.iqspace.resources.Patient;
 import com.codeprehend.iqspace.util.Utils;
 
@@ -86,7 +85,7 @@ public class IQSpaceGUI extends JFrame {
 		questionPanel = new QuestionPanel(this);
 		this.add(questionPanel);
 
-		questionPanel.loadExaminationGUIForPatient(patient, antecedents, examinations);
+		questionPanel.loadQuestion(1);
 		
 		questionPanel.setVisible(true);
 		
@@ -108,7 +107,7 @@ public class IQSpaceGUI extends JFrame {
 	
 	//** Getters and setters //
 
-	public QuestionPanel getExaminationPatientPanel() {
+	public QuestionPanel getQuestionPanel() {
 		return questionPanel;
 	}
 
