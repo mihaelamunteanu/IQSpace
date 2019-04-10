@@ -52,7 +52,7 @@ public class IQSpaceGUI extends JFrame {
 		
 		//Create main panel
 		questionPanel = new QuestionPanel(this);
-		resultsPanel = new ResultPanel(this);
+//		resultsPanel = new ResultPanel(this);
 		
 	    this.setVisible(true);
 	}
@@ -60,16 +60,12 @@ public class IQSpaceGUI extends JFrame {
 	private void setExitBehaviour() {
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new WindowAdapter() {
+			
 		    @Override
 		    public void windowClosing(WindowEvent we)
 		    { 
-		        String ObjButtons[] = {"Da","Nu"};
-		        int PromptResult = JOptionPane.showOptionDialog(null,"Sigur doriti sa parasiti aplicatia?","Confirmare EXIT",
-		        		JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, ObjButtons,ObjButtons[0]);
-		        if(PromptResult==JOptionPane.YES_OPTION)
-		        {
-		            System.exit(0);
-		        }
+		    	JOptionPane.showMessageDialog(we.getWindow(), "Aplicatia trebuie sa ramana deschisa. Multumim!", 
+						"Neautorizat", JOptionPane.NO_OPTION);
 		    }
 		});
 
@@ -83,13 +79,13 @@ public class IQSpaceGUI extends JFrame {
 		*/
 		this.remove(questionPanel);
 		questionPanel = new QuestionPanel(this);
-		this.add(questionPanel);
+//		this.add(questionPanel);
 
-		questionPanel.loadQuestion(1);
+		questionPanel.loadQuestionPanel(questionNumber);
 		
 		questionPanel.setVisible(true);
 		
-		resultsPanel.setVisible(false);
+//		resultsPanel.setVisible(false);
 	}
 	
 	public void showResultsPanel(Patient patient, List<Antecedent> antecedents, String fromPanel) {

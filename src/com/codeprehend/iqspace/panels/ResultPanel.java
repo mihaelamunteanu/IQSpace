@@ -7,8 +7,6 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,12 +21,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import com.codeprehend.iqspace.IQSpaceGUI;
-import com.codeprehend.iqspace.listeners.AccesFilesExaminationButtonActionListener;
-import com.codeprehend.iqspace.listeners.BackFromModifyPatientPanelButtonActionListener;
-import com.codeprehend.iqspace.listeners.SaveModificationsForPatientButtonActionListener;
 import com.codeprehend.iqspace.resources.Antecedent;
 import com.codeprehend.iqspace.resources.Patient;
-import com.codeprehend.iqspace.util.Constants;
 import com.codeprehend.iqspace.util.Utils;
 
 public class ResultPanel extends JPanel {
@@ -372,16 +366,16 @@ public class ResultPanel extends JPanel {
 		gbc_btnNewButton_7.gridy = 0;
 		buttonPanel.add(btnNewButton_7, gbc_btnNewButton_7);
 		
-		btnNewButton_7.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if (Constants.FROM_EXAMINATION_PANEL.equals(fromPanel)) {
-					BackFromModifyPatientPanelButtonActionListener.backButtonPressed(
-							parentPanel, pacient, antecedents);
-				} else {
-					AccesFilesExaminationButtonActionListener.actionPerformed(parentPanel, pacient);
-				}
-			}
-		});
+//		btnNewButton_7.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent arg0) {
+//				if (Constants.FROM_EXAMINATION_PANEL.equals(fromPanel)) {
+//					BackFromModifyPatientPanelButtonActionListener.backButtonPressed(
+//							parentPanel, pacient, antecedents);
+//				} else {
+//					AccesFilesExaminationButtonActionListener.actionPerformed(parentPanel, pacient);
+//				}
+//			}
+//		});
 		
 		
 		JButton btnSalveaza = new JButton("SALVEAZA MODIFICARI");
@@ -393,7 +387,7 @@ public class ResultPanel extends JPanel {
 		gbc_btnSalveaza.gridx = 5;
 		gbc_btnSalveaza.gridy = 0;
 		buttonPanel.add(btnSalveaza, gbc_btnSalveaza);
-		btnSalveaza.addActionListener(new SaveModificationsForPatientButtonActionListener(parentPanel, pacient));
+//		btnSalveaza.addActionListener(new SaveModificationsForPatientButtonActionListener(parentPanel, pacient));
 	}
 	
 	/**

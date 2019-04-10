@@ -24,8 +24,8 @@ public class IQSpaceLauncher {
 
 	public static void main(String[] args) {
 		Utils.loadProperties();
-		IQSpaceGUI medicalRecordGUI = new IQSpaceGUI();
-		medicalRecordGUI.showQuestionPanel(1);
+		IQSpaceGUI iqSpaceGUI = new IQSpaceGUI();
+		iqSpaceGUI.showQuestionPanel(1);
 
 	}
 
