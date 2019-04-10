@@ -1,18 +1,21 @@
 package com.codeprehend.iqspace;
 
 
+import java.awt.AWTKeyStroke;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.time.LocalDate;
-import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import com.codeprehend.iqspace.panels.QuestionPanel;
 import com.codeprehend.iqspace.panels.ResultPanel;
-import com.codeprehend.iqspace.resources.Antecedent;
-import com.codeprehend.iqspace.resources.Patient;
+import com.codeprehend.iqspace.resources.Test;
 import com.codeprehend.iqspace.util.Utils;
 
 
@@ -46,9 +49,35 @@ public class IQSpaceGUI extends JFrame {
 		super();
 		//initialize GUI
 		
-		this.setBounds(100, 100, 813, 516);
+		this.setBounds(100, 100, 1613, 1016);
+		
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		
+		this.setSize(dim.getSize().width, dim.getSize().height);
+		this.setLocation(dim.width/2-this.getSize().width/2, 0);
+		
+		
 		this.setExitBehaviour();
+		this.setResizable(false);
+		
 		this.setTitle(numeFereastraPrincipala);
+		
+        this.addKeyListener(new KeyAdapter()
+        {
+            public void keyPressed(KeyEvent e)
+            {
+            	//verific fie ca acele conbinatii sa fie acceptate. fie cele care nu sunt, vad cum e mai convenabil
+                AWTKeyStroke ak = AWTKeyStroke.getAWTKeyStrokeForEvent(e);
+        		JOptionPane.showMessageDialog(IQSpaceLauncher.IQSpaceGUI,
+        				" Ati apasat: " + ak.toString());
+                if(ak.toString().equals("pressed F2") ||
+                		ak.toString().equals("alt pressed ALT"))
+                {
+            		JOptionPane.showMessageDialog(IQSpaceLauncher.IQSpaceGUI,
+            				" Va rugam folositi aplicatia doar raspunzand la intrebari!");
+                }
+            }
+        });
 		
 		//Create main panel
 		questionPanel = new QuestionPanel(this);
@@ -72,11 +101,7 @@ public class IQSpaceGUI extends JFrame {
 	}
 	
 	public void showQuestionPanel(int questionNumber) {
-		/*Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		
-		this.setSize(1100, dim.getSize().height);
-		this.setLocation(dim.width/2-this.getSize().width/2, 0);
-		*/
+
 		this.remove(questionPanel);
 		questionPanel = new QuestionPanel(this);
 //		this.add(questionPanel);
@@ -88,12 +113,12 @@ public class IQSpaceGUI extends JFrame {
 //		resultsPanel.setVisible(false);
 	}
 	
-	public void showResultsPanel(Patient patient, List<Antecedent> antecedents, String fromPanel) {
+	public void showResultsPanel(Test test) {
 		this.remove(resultsPanel);
 		resultsPanel = new ResultPanel(this);
 		this.add(resultsPanel);
 		
-		resultsPanel.setPacient(patient);
+		resultsPanel.setPacient(test);
 		resultsPanel.setAntecedents(antecedents);
 		resultsPanel.loadModifyGUIPanelForPatient(patient, fromPanel);
 		resultsPanel.setVisible(true);

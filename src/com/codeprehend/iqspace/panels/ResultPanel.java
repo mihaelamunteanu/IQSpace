@@ -22,7 +22,7 @@ import javax.swing.border.LineBorder;
 
 import com.codeprehend.iqspace.IQSpaceGUI;
 import com.codeprehend.iqspace.resources.Antecedent;
-import com.codeprehend.iqspace.resources.Patient;
+import com.codeprehend.iqspace.resources.Test;
 import com.codeprehend.iqspace.util.Utils;
 
 public class ResultPanel extends JPanel {
@@ -32,7 +32,7 @@ public class ResultPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private IQSpaceGUI parentPanel;
-	private Patient pacient;
+	private Test pacient;
 
 	private JTextField textFieldDate = new JTextField();
 	private JTextField textFieldName = new JTextField();
@@ -55,7 +55,7 @@ public class ResultPanel extends JPanel {
 		this.setVisible(false);
 	}
 	
-	public void loadModifyGUIPanelForPatient(Patient pacient, String fromPanel) {
+	public void loadModifyGUIPanelForPatient(Test pacient, String fromPanel) {
 		this.pacient = pacient;
 		this.setBorder(new LineBorder(new Color(0, 0, 0)));
 		parentPanel.add(this, BorderLayout.CENTER);
@@ -395,7 +395,7 @@ public class ResultPanel extends JPanel {
 	 * 
 	 * @param patients
 	 */
-	public void setPatientInformations(Patient pacient){
+	public void setPatientInformations(Test pacient){
 		this.pacient = pacient;
 	}
 	
@@ -413,11 +413,11 @@ public class ResultPanel extends JPanel {
 		this.parentPanel = parentPanel;
 	}
 
-	public Patient getPacient() {
+	public Test getPacient() {
 		return pacient;
 	}
 
-	public void setPacient(Patient pacient) {
+	public void setPacient(Test pacient) {
 		this.pacient = pacient;
 	}
 

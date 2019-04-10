@@ -21,11 +21,13 @@ public class IQSpaceLauncher {
 	 */
 	 
 	public static String versiune = "v1.0";
+	public static IQSpaceGUI IQSpaceGUI = new IQSpaceGUI();
+	
 
 	public static void main(String[] args) {
 		Utils.loadProperties();
-		IQSpaceGUI iqSpaceGUI = new IQSpaceGUI();
-		iqSpaceGUI.showQuestionPanel(1);
+		
+		IQSpaceGUI.showQuestionPanel(1);
 
 	}
 

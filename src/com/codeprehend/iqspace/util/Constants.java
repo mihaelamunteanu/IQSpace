@@ -7,4 +7,6 @@ public class Constants {
 	public static String FROM_FILES_PANEL = "FromPatientPanel";
 	public static String DATE_PATTERN = "dd.MM.yyyy";
 	public static String SLASH_DATE_PATTER = "dd/MM/yyyy";
+	
+	public static final String CTRL_ALT_DEL = "ctrlAltDeL";
 }

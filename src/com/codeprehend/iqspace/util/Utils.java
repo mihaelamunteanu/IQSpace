@@ -10,8 +10,6 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.codeprehend.iqspace.resources.CabinetData;
-
 public class Utils {
 	
 	private static final Logger LOGGER = Logger.getLogger(Constants.LOGGER_NAME);
@@ -47,9 +45,6 @@ public class Utils {
 			
 			DatabaseConnection.loadDatabaseProperties(prop.getProperty("dbserver"), 
 					prop.getProperty("dbport"), prop.getProperty("dbuser"), prop.getProperty("dbpass"));
-			
-			CabinetData.loadCabinetData(prop.getProperty("numecabinet"), prop.getProperty("adresacabinet"), 
-					prop.getProperty("telefoncabinet"), prop.getProperty("medicaplicatie"), prop.getProperty("pdf_location"));
 			
 			String loggerLocation = prop.getProperty("log_location");
 			String dateTime = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME);
