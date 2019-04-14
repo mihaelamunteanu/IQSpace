@@ -85,7 +85,7 @@ public class Test {
 	public Long getNumberOfQuestions() {
 		return numberOfQuestions;
 	}
-
+	
 	public void setNumberOfQuestions(Long numberOfQuestions) {
 		this.numberOfQuestions = numberOfQuestions;
 	}

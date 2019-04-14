@@ -1,5 +1,9 @@
 package com.codeprehend.iqspace;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import com.codeprehend.iqspace.util.Constants;
 import com.codeprehend.iqspace.util.Utils;
 
 /** 
@@ -23,11 +27,23 @@ public class IQSpaceLauncher {
 	public static String versiune = "v1.0";
 	public static IQSpaceGUI IQSpaceGUI = new IQSpaceGUI();
 	
+	private static final Logger LOGGER = Logger.getLogger(Constants.LOGGER_NAME);
+	
 
 	public static void main(String[] args) {
 		Utils.loadProperties();
 		
-		IQSpaceGUI.showQuestionPanel(1);
+		Long testNumber = 1L;
+		if (args != null && args[0] != null) {
+			try {
+				testNumber = Long.valueOf(args[0]);
+			} catch (Exception e) {
+				testNumber = 1L;
+				LOGGER.log(Level.INFO, "the argument for the application cannot be cast to Long");	
+			}
+		}
+			
+		IQSpaceGUI.loadTest(testNumber);
 
 	}
 

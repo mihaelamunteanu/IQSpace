@@ -17,6 +17,10 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import com.codeprehend.iqspace.IQSpaceGUI;
+import com.codeprehend.iqspace.listeners.BackButtonActionListener;
+import com.codeprehend.iqspace.listeners.NextQuestionButtonActionListener;
+import com.codeprehend.iqspace.resources.Question;
+import com.codeprehend.iqspace.resources.Test;
 
 public class QuestionPanel extends JPanel {
 	/**
@@ -38,7 +42,7 @@ public class QuestionPanel extends JPanel {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void  loadQuestionPanel(int questionNumber) {
+	public void  loadQuestionPanel(Question question, Test test) {
 		//JPanel GridBagLayoutPanel = new JPanel();
 		this.setBorder(new LineBorder(new Color(0, 0, 0)));
 		parentPanel.add(this, BorderLayout.CENTER);
@@ -67,7 +71,8 @@ public class QuestionPanel extends JPanel {
 		//se asteapta doua randuri si punem doar unul
 		
 		
-		JLabel questionaNoLabel = new JLabel("Intrebarea numarul x din y");
+		JLabel questionaNoLabel = new JLabel("Intrebarea numarul " 
+					+ question.getQuestionNumber() + " din " + test.getNumberOfQuestions());
 		questionaNoLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		GridBagConstraints gbc_Intrebarea = new GridBagConstraints();
 		gbc_Intrebarea.anchor = GridBagConstraints.EAST;
@@ -99,7 +104,7 @@ public class QuestionPanel extends JPanel {
 		gbl_scrollPanel.rowWeights = new double[]{1.0};
 		panel_1.setLayout(gbl_scrollPanel);
 		
-		JPanel image1Panel = new ImagePanel();
+		JPanel image1Panel = new ImagePanel(test.getTestName(), question.getQuestionNumber());
 		scrollPane.setViewportView(image1Panel);
 		GridBagLayout gbl_imagePanel = new GridBagLayout();
 		gbl_imagePanel.columnWidths = new int[]{0};
@@ -133,7 +138,7 @@ public class QuestionPanel extends JPanel {
 		gbl_questionSectionPanel.rowWeights = new double[]{0.25, 0.25, 0.25, 0.25};
 		questionSectionPanel.setLayout(gbl_questionSectionPanel);
 		
-		JLabel questionText = new JLabel("Raspundeti la intrebarea aceasta lunga, trebuie si sectiune de optiuni?");
+		JLabel questionText = new JLabel(question.getQuestion());
 		GridBagConstraints glb_questionTextLbl = new GridBagConstraints();
 		glb_questionTextLbl.anchor = GridBagConstraints.WEST;
 		glb_questionTextLbl.insets = new Insets(0, 0, 5, 0);
@@ -150,7 +155,7 @@ public class QuestionPanel extends JPanel {
 		gbc_rdbtnC.gridy = 1;
 		questionSectionPanel.add(rdbtnC, gbc_rdbtnC);
 		
-		JRadioButton rdbtnB = new JRadioButton("  b)");
+		JRadioButton rdbtnB = new JRadioButton("  b)" + question.getAnswer());
 		rdbtnB.setHorizontalAlignment(SwingConstants.LEFT);
 		GridBagConstraints gbc_rdbtnB = new GridBagConstraints();
 		gbc_rdbtnB.anchor = GridBagConstraints.WEST;
@@ -200,17 +205,9 @@ public class QuestionPanel extends JPanel {
 		buttonPanel.add(nextBtn, gbc_btnNext);
 
 
-//		//Action Listeners
-//		btnNewButton_7.addActionListener(new BackFromExaminationPatientPanelButtonActionListener(this.parentPanel));
-//		btnNewButton_6.addActionListener(new GoHomeFromExaminationPatientButtonListener(this.parentPanel));
-//		btnNewButton_5.addActionListener(new ModifyPatientButtonActionListener(this.parentPanel, patient, Constants.FROM_EXAMINATION_PANEL));
-//		btnSalveaza.addActionListener(new SaveExaminationButtonActionListener(parentPanel, patient, antecedents, examinations));
-//		
-//		btnNewButton_4.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent arg0) {
-//				AccesFilesExaminationButtonActionListener.actionPerformed(parentPanel, patient);
-//			}
-//		});
+		//Action Listeners
+		backBtn.addActionListener(new BackButtonActionListener(this.parentPanel));
+		nextBtn.addActionListener(new NextQuestionButtonActionListener(this.parentPanel));
 	}
 	
 }

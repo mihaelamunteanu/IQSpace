@@ -45,17 +45,4 @@ public class InputValidation {
 		}
 	}
 	
-	public static void validateRegNumber(String regNumber) throws Exception {
-		if (regNumber != null && regNumber.compareTo("") != 0) {
-			Pattern pattern = Pattern.compile("[-]|([2][0-9]{12})");
-			Matcher matcher = pattern.matcher(regNumber);
-			if (!matcher.matches()) {
-				throw new Exception("CNP-ul '" + regNumber + "' nu este corect.");
-			}
-		} else {
-			throw new Exception("Completati CNP-ul!");
-		}
-	}
-	
-	
 }

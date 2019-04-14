@@ -42,6 +42,7 @@ public class Utils {
 			LOGGER.log(Level.INFO, "Loaded DB Server Name: " + prop.getProperty("dbserver"));	
 			LOGGER.log(Level.INFO, "Loaded DB Port       : " + prop.getProperty("dbport"));
 			LOGGER.log(Level.INFO, "Loaded DB User       : " + prop.getProperty("dbuser"));
+			LOGGER.log(Level.INFO, "Images location       : " + prop.getProperty("image_location"));
 			
 			DatabaseConnection.loadDatabaseProperties(prop.getProperty("dbserver"), 
 					prop.getProperty("dbport"), prop.getProperty("dbuser"), prop.getProperty("dbpass"));
@@ -54,6 +55,13 @@ public class Utils {
 				LoggerSettings.setLoggerSetting(loggerLocation + "\\" + logFileName);
 			} else {
 				LoggerSettings.setLoggerSetting("." + "\\" + logFileName);
+			}
+			
+			String imagesLocation = prop.getProperty("image_location");
+			if (imagesLocation != null && !imagesLocation.isEmpty()) {
+				ImageSettings.setImageLocation(imagesLocation);
+			} else {
+				ImageSettings.setImageLocation("\\");
 			}
 		} catch (IOException ex) {
 			LOGGER.log(Level.SEVERE, "Error reading config.properties file", ex);

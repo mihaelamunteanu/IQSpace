@@ -10,9 +10,9 @@ import java.sql.SQLException;
  * @since 4 Dec 2018
  */
 public class DatabaseConnection {
-	private static String url = "jdbc:postgresql://localhost:5432/CabinetRugina";
+	private static String url = "jdbc:postgresql://localhost:5434/IQSpaceTest";
     private static String server = "localhost";
-    private static String port = "5432";
+    private static String port = "5434";
     private static String user = "postgres";
     private static String password = "root";
     private static int accessed = 0;
@@ -26,7 +26,7 @@ public class DatabaseConnection {
 			if (userDb != null && !userDb.isEmpty()) user = userDb;
 			if (passDb != null && !passDb.isEmpty()) password = passDb;
 			
-			url = "jdbc:postgresql://" + server + ":" + port + "/CabinetRugina";
+			url = "jdbc:postgresql://" + server + ":" + port + "/IQSpaceTest";
 			
 			accessed = 1;
 		}

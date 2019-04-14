@@ -2,7 +2,6 @@ package com.codeprehend.iqspace.panels;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -21,9 +20,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import com.codeprehend.iqspace.IQSpaceGUI;
-import com.codeprehend.iqspace.resources.Antecedent;
+import com.codeprehend.iqspace.resources.ObtainedAnswer;
 import com.codeprehend.iqspace.resources.Test;
-import com.codeprehend.iqspace.util.Utils;
 
 public class ResultPanel extends JPanel {
 
@@ -32,7 +30,7 @@ public class ResultPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private IQSpaceGUI parentPanel;
-	private Test pacient;
+	private Test test;
 
 	private JTextField textFieldDate = new JTextField();
 	private JTextField textFieldName = new JTextField();
@@ -45,7 +43,7 @@ public class ResultPanel extends JPanel {
 	private JTextField textFieldSpotaneousAbortionNumber = new JTextField();
 	private JTextArea  textAreaAntecedents = new JTextArea();
 	
-	private List<Antecedent> antecedents = new ArrayList<Antecedent>();
+	private List<ObtainedAnswer> obtainedAnswers = new ArrayList<ObtainedAnswer>();
 	
 	public ResultPanel(IQSpaceGUI parent) {
 		super();
@@ -55,8 +53,8 @@ public class ResultPanel extends JPanel {
 		this.setVisible(false);
 	}
 	
-	public void loadModifyGUIPanelForPatient(Test pacient, String fromPanel) {
-		this.pacient = pacient;
+	public void loadResultsPanel(Test test) {
+		this.test = test;
 		this.setBorder(new LineBorder(new Color(0, 0, 0)));
 		parentPanel.add(this, BorderLayout.CENTER);
 		GridBagLayout gbl_GridBagLayoutPanel = new GridBagLayout();
@@ -98,7 +96,7 @@ public class ResultPanel extends JPanel {
 		gbc_NameLabel.gridy = 1;
 		InformationGridBagLayoutPanel.add(NameLabel, gbc_NameLabel);
 		
-		textFieldName.setText(pacient.getNume());
+		textFieldName.setText(test.getTestName());
 		GridBagConstraints gbc_txtMunteanu = new GridBagConstraints();
 		gbc_txtMunteanu.insets = new Insets(0, 0, 5, 5);
 		gbc_txtMunteanu.fill = GridBagConstraints.HORIZONTAL;
@@ -115,15 +113,6 @@ public class ResultPanel extends JPanel {
 		gbc_PrenumeLabel.gridy = 1;
 		InformationGridBagLayoutPanel.add(PrenumeLabel, gbc_PrenumeLabel);
 		
-		textFieldFirstName.setText(pacient.getPrenume());
-		GridBagConstraints gbc_txtMihaela = new GridBagConstraints();
-		gbc_txtMihaela.insets = new Insets(0, 0, 5, 5);
-		gbc_txtMihaela.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtMihaela.gridx = 3;
-		gbc_txtMihaela.gridy = 1;
-		InformationGridBagLayoutPanel.add(textFieldFirstName, gbc_txtMihaela);
-		textFieldFirstName.setColumns(20);
-		
 		JLabel lblTelefon = new JLabel("Telefon");
 		GridBagConstraints gbc_lblTelefon = new GridBagConstraints();
 		gbc_lblTelefon.anchor = GridBagConstraints.EAST;
@@ -131,15 +120,6 @@ public class ResultPanel extends JPanel {
 		gbc_lblTelefon.gridx = 4;
 		gbc_lblTelefon.gridy = 1;
 		InformationGridBagLayoutPanel.add(lblTelefon, gbc_lblTelefon);
-		
-		textFieldPhoneNumber.setText(pacient.getNumarTelefon());
-		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
-		gbc_textField_2.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_2.gridx = 5;
-		gbc_textField_2.gridy = 1;
-		InformationGridBagLayoutPanel.add(textFieldPhoneNumber, gbc_textField_2);
-		textFieldPhoneNumber.setColumns(20);
 		
 		JLabel DataNastereLabel = new JLabel("Data nasterii");
 		GridBagConstraints gbc_DataNastereLabel = new GridBagConstraints();
@@ -149,16 +129,6 @@ public class ResultPanel extends JPanel {
 		gbc_DataNastereLabel.gridy = 2;
 		InformationGridBagLayoutPanel.add(DataNastereLabel, gbc_DataNastereLabel);
 		
-		
-		textFieldDate.setText(pacient.getDataNasterii() != null ? Utils.fromDateToString(pacient.getDataNasterii()).toString() : "");
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 2;
-		InformationGridBagLayoutPanel.add(textFieldDate, gbc_textField);
-		textFieldDate.setColumns(20);
-		
 		JLabel CNPLabel = new JLabel("CNP");
 		GridBagConstraints gbc_CNPLabel = new GridBagConstraints();
 		gbc_CNPLabel.anchor = GridBagConstraints.EAST;
@@ -166,15 +136,6 @@ public class ResultPanel extends JPanel {
 		gbc_CNPLabel.gridx = 2;
 		gbc_CNPLabel.gridy = 2;
 		InformationGridBagLayoutPanel.add(CNPLabel, gbc_CNPLabel);
-		
-		textFieldRegNumber.setText(pacient.getCnp());
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.gridx = 3;
-		gbc_textField_1.gridy = 2;
-		InformationGridBagLayoutPanel.add(textFieldRegNumber, gbc_textField_1);
-		textFieldRegNumber.setColumns(20);
 		
 		JPanel pregnaciesGridBagLayoutPanel =  new JPanel();
 		GridBagConstraints gbc_PregnanciesGridBagLayoutPanel = new GridBagConstraints();
@@ -199,17 +160,6 @@ public class ResultPanel extends JPanel {
 		gbc_lblNasteriNaturale.gridy = 0;
 		pregnaciesGridBagLayoutPanel.add(lblNasteriNaturale, gbc_lblNasteriNaturale);
 		
-		textFieldNaturalBirthsNumber.setHorizontalAlignment(SwingConstants.CENTER);
-        Dimension noSize = textFieldNaturalBirthsNumber.getPreferredSize();
-        noSize.width = 2;
-        textFieldNaturalBirthsNumber.setText(String.valueOf(pacient.getNasteriNaturale()));
-		GridBagConstraints gbc_textField_3 = new GridBagConstraints();
-		gbc_textField_3.insets = new Insets(0, 0, 0, 5);
-		gbc_textField_3.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_3.gridx = 1;
-		gbc_textField_3.gridy = 0;
-		pregnaciesGridBagLayoutPanel.add(textFieldNaturalBirthsNumber, gbc_textField_3);
-		
 		JLabel lblCezariene = new JLabel("Cezariene");
 		GridBagConstraints gbc_lblCezariene = new GridBagConstraints();
 		gbc_lblCezariene.anchor = GridBagConstraints.EAST;
@@ -218,15 +168,6 @@ public class ResultPanel extends JPanel {
 		gbc_lblCezariene.gridy = 0;
 		pregnaciesGridBagLayoutPanel.add(lblCezariene, gbc_lblCezariene);
 		
-		textFieldcSectionBirthNumber.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldcSectionBirthNumber.setText(String.valueOf(pacient.getCezariene()));
-		GridBagConstraints gbc_textField_4 = new GridBagConstraints();
-		gbc_textField_4.insets = new Insets(0, 0, 0, 5);
-		gbc_textField_4.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_4.gridx = 3;
-		gbc_textField_4.gridy = 0;
-		pregnaciesGridBagLayoutPanel.add(textFieldcSectionBirthNumber, gbc_textField_4);
-		textFieldcSectionBirthNumber.setColumns(1);
 		
 		JLabel lblAvorturiLaCerere = new JLabel("Avorturi la cerere");
 		GridBagConstraints gbc_lblAvorturiLaCerere = new GridBagConstraints();
@@ -236,16 +177,6 @@ public class ResultPanel extends JPanel {
 		gbc_lblAvorturiLaCerere.gridy = 0;
 		pregnaciesGridBagLayoutPanel.add(lblAvorturiLaCerere, gbc_lblAvorturiLaCerere);
 		
-		textFieldRequestedAbortionNumber.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldRequestedAbortionNumber.setText(String.valueOf(pacient.getAvorturiLaCerere()));
-		GridBagConstraints gbc_textField_5 = new GridBagConstraints();
-		gbc_textField_5.insets = new Insets(0, 0, 0, 5);
-		gbc_textField_5.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_5.gridx = 5;
-		gbc_textField_5.gridy = 0;
-		pregnaciesGridBagLayoutPanel.add(textFieldRequestedAbortionNumber, gbc_textField_5);
-		textFieldRequestedAbortionNumber.setColumns(1);
-		
 		JLabel lblAvorturiSpontane = new JLabel("Avorturi spontane");
 		GridBagConstraints gbc_lblAvorturiSpontane = new GridBagConstraints();
 		gbc_lblAvorturiSpontane.anchor = GridBagConstraints.EAST;
@@ -253,16 +184,6 @@ public class ResultPanel extends JPanel {
 		gbc_lblAvorturiSpontane.gridx = 6;
 		gbc_lblAvorturiSpontane.gridy = 0;
 		pregnaciesGridBagLayoutPanel.add(lblAvorturiSpontane, gbc_lblAvorturiSpontane);
-		
-		textFieldSpotaneousAbortionNumber.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldSpotaneousAbortionNumber.setText(String.valueOf(pacient.getAvorturiSpontane()));
-		GridBagConstraints gbc_textField_6 = new GridBagConstraints();
-		gbc_textField_6.insets = new Insets(0, 0, 0, 5);
-		gbc_textField_6.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_6.gridx = 7;
-		gbc_textField_6.gridy = 0;
-		pregnaciesGridBagLayoutPanel.add(textFieldSpotaneousAbortionNumber, gbc_textField_6);
-		textFieldSpotaneousAbortionNumber.setColumns(1);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -313,36 +234,6 @@ public class ResultPanel extends JPanel {
 //		gbc_label.gridx = 0;
 //		gbc_label.gridy = 7;
 //		medicalInfoPanel.add(label, gbc_label);
-		
-		int ycoordinate = 7;
-		for (Antecedent antecedent : antecedents) {
-//			JLabel lblAntecedente = new JLabel("Antecedente " + antecedent.getRegistrationDate());
-//			lblAntecedente.setFont(new Font("Tahoma", Font.BOLD, 11));
-//			lblAntecedente.setHorizontalAlignment(SwingConstants.LEFT);
-//			GridBagConstraints gbc_lblAntecedente = new GridBagConstraints();
-//			gbc_lblAntecedente.anchor = GridBagConstraints.WEST;
-//			gbc_lblAntecedente.insets = new Insets(0, 0, 5, 0);
-//			gbc_lblAntecedente.gridx = 0;
-//			gbc_lblAntecedente.gridy = ycoordinate;
-//			medicalInfoPanel.add(lblAntecedente, gbc_lblAntecedente);
-			
-			JTextArea lblAntcedenteNumarulDoi = new JTextArea(antecedent.getAntecedentText(), 1, 1);
-			lblAntcedenteNumarulDoi.setFont(new Font("Tahoma", Font.PLAIN, 11));
-			GridBagConstraints gbc_lblAntcedenteNumarulDoi = new GridBagConstraints();
-			gbc_lblAntcedenteNumarulDoi.anchor = GridBagConstraints.WEST;
-			gbc_lblAntcedenteNumarulDoi.insets = new Insets(0, 0, 6, 5);
-			gbc_lblAntcedenteNumarulDoi.gridx = 0;
-			gbc_lblAntcedenteNumarulDoi.gridy = ycoordinate+1;
-			gbc_lblAntcedenteNumarulDoi.weighty = 1.0;
-			medicalInfoPanel.add(lblAntcedenteNumarulDoi, gbc_lblAntcedenteNumarulDoi);
-
-			lblAntcedenteNumarulDoi.setEditable(false);  
-			lblAntcedenteNumarulDoi.setCursor(null);  
-			lblAntcedenteNumarulDoi.setOpaque(false);  
-			lblAntcedenteNumarulDoi.setFocusable(false);
-			
-			ycoordinate = ycoordinate + 1;
-		}
 		
 		JPanel buttonPanel = new JPanel();
 		GridBagConstraints gbc_buttonPanel = new GridBagConstraints();
@@ -395,14 +286,14 @@ public class ResultPanel extends JPanel {
 	 * 
 	 * @param patients
 	 */
-	public void setPatientInformations(Test pacient){
-		this.pacient = pacient;
+	public void seTestInfo(Test test){
+		this.test = test;
 	}
 	
 
 		
-	public void setAntecedents(List<Antecedent> antecedents) {
-		this.antecedents = antecedents;
+	public void setObtainedAnswers(List<ObtainedAnswer> obtainedAnswers) {
+		this.obtainedAnswers = obtainedAnswers;
 	}
 
 	public IQSpaceGUI getParentPanel() {
@@ -413,12 +304,12 @@ public class ResultPanel extends JPanel {
 		this.parentPanel = parentPanel;
 	}
 
-	public Test getPacient() {
-		return pacient;
+	public Test getTest() {
+		return test;
 	}
 
-	public void setPacient(Test pacient) {
-		this.pacient = pacient;
+	public void setTest(Test test) {
+		this.test = test;
 	}
 
 	public JTextField getTextFieldDate() {

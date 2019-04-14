@@ -1,20 +1,23 @@
 package com.codeprehend.iqspace;
 
 
-import java.awt.AWTKeyStroke;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import com.codeprehend.iqspace.dao.QuestionsDAO;
+import com.codeprehend.iqspace.dao.TestsDAO;
 import com.codeprehend.iqspace.panels.QuestionPanel;
 import com.codeprehend.iqspace.panels.ResultPanel;
+import com.codeprehend.iqspace.resources.ObtainedAnswer;
+import com.codeprehend.iqspace.resources.Question;
 import com.codeprehend.iqspace.resources.Test;
 import com.codeprehend.iqspace.util.Utils;
 
@@ -45,6 +48,12 @@ public class IQSpaceGUI extends JFrame {
 	private QuestionPanel questionPanel;
 	private ResultPanel resultsPanel;
 	
+	Test testResource = null;
+	private List<Question> questionsForTest = null;
+	private List<ObtainedAnswer> obtainedAnswers = new ArrayList<>();
+	private int numberOfCurrentQuestion = 1;
+	private Long usedTest;
+	
 	public IQSpaceGUI(){
 		super();
 		//initialize GUI
@@ -62,28 +71,40 @@ public class IQSpaceGUI extends JFrame {
 		
 		this.setTitle(numeFereastraPrincipala);
 		
-        this.addKeyListener(new KeyAdapter()
-        {
-            public void keyPressed(KeyEvent e)
-            {
-            	//verific fie ca acele conbinatii sa fie acceptate. fie cele care nu sunt, vad cum e mai convenabil
-                AWTKeyStroke ak = AWTKeyStroke.getAWTKeyStrokeForEvent(e);
-        		JOptionPane.showMessageDialog(IQSpaceLauncher.IQSpaceGUI,
-        				" Ati apasat: " + ak.toString());
-                if(ak.toString().equals("pressed F2") ||
-                		ak.toString().equals("alt pressed ALT"))
-                {
-            		JOptionPane.showMessageDialog(IQSpaceLauncher.IQSpaceGUI,
-            				" Va rugam folositi aplicatia doar raspunzand la intrebari!");
-                }
-            }
-        });
+//        this.addKeyListener(new KeyAdapter()
+//        {
+//            public void keyPressed(KeyEvent e)
+//            {
+//            	//verific fie ca acele conbinatii sa fie acceptate. fie cele care nu sunt, vad cum e mai convenabil
+//                AWTKeyStroke ak = AWTKeyStroke.getAWTKeyStrokeForEvent(e);
+//        		JOptionPane.showMessageDialog(IQSpaceLauncher.IQSpaceGUI,
+//        				" Ati apasat: " + ak.toString());
+//                if(ak.toString().equals("pressed F2") ||
+//                		ak.toString().equals("alt pressed ALT"))
+//                {
+//            		JOptionPane.showMessageDialog(IQSpaceLauncher.IQSpaceGUI,
+//            				" Va rugam folositi aplicatia doar raspunzand la intrebari!");
+//                }
+//            }
+//        });
 		
 		//Create main panel
 		questionPanel = new QuestionPanel(this);
 //		resultsPanel = new ResultPanel(this);
 		
 	    this.setVisible(true);
+	}
+	
+	public void reset() {
+		obtainedAnswers = new ArrayList<>();
+		numberOfCurrentQuestion = 0;
+	}
+	
+	public void loadTest(Long testId) {
+		usedTest = testId;
+		testResource = TestsDAO.getTestById(testId);
+		questionsForTest = QuestionsDAO.getQuestionsByTestId(testId);
+		showQuestionPanel(questionsForTest.get(0));
 	}
 	
 	private void setExitBehaviour() {
@@ -100,17 +121,13 @@ public class IQSpaceGUI extends JFrame {
 
 	}
 	
-	public void showQuestionPanel(int questionNumber) {
-
+	public void showQuestionPanel(Question question) {
 		this.remove(questionPanel);
 		questionPanel = new QuestionPanel(this);
-//		this.add(questionPanel);
+		this.add(questionPanel);
 
-		questionPanel.loadQuestionPanel(questionNumber);
-		
+		questionPanel.loadQuestionPanel(question, testResource);
 		questionPanel.setVisible(true);
-		
-//		resultsPanel.setVisible(false);
 	}
 	
 	public void showResultsPanel(Test test) {
@@ -118,9 +135,9 @@ public class IQSpaceGUI extends JFrame {
 		resultsPanel = new ResultPanel(this);
 		this.add(resultsPanel);
 		
-		resultsPanel.setPacient(test);
-		resultsPanel.setAntecedents(antecedents);
-		resultsPanel.loadModifyGUIPanelForPatient(patient, fromPanel);
+		resultsPanel.setTest(test);
+		resultsPanel.setObtainedAnswers(obtainedAnswers);
+		resultsPanel.loadResultsPanel(test);
 		resultsPanel.setVisible(true);
 		
 		questionPanel.setVisible(false);
@@ -134,6 +151,26 @@ public class IQSpaceGUI extends JFrame {
 
 	public ResultPanel getModifyPatientPanel() {
 		return resultsPanel;
+	}
+
+	public List<ObtainedAnswer> getObtainedAnswers() {
+		return obtainedAnswers;
+	}
+
+	public int getNumberOfCurrentQuestion() {
+		return numberOfCurrentQuestion;
+	}
+
+	public void setNumberOfCurrentQuestion(int numberOfCurrentQuestion) {
+		this.numberOfCurrentQuestion = numberOfCurrentQuestion;
+	}
+
+	public Test getTestResource() {
+		return testResource;
+	}
+
+	public List<Question> getQuestionsForTest() {
+		return questionsForTest;
 	}
 	
 }

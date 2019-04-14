@@ -1,6 +1,5 @@
 package com.codeprehend.iqspace.dao;
 
-import java.io.ByteArrayInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,8 +26,8 @@ public class QuestionsDAO {
 		Long generatedId = -1L;
 		String SQL = "INSERT into questions "
 				+ "(test_id, question, question_type, answer, answer_explanations, "
-				+ "hint1, hint2, image1, other_observations, question_number) "
-				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+				+ "hint1, hint2, other_observations, question_number) "
+				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 		
 		try (Connection conn = DatabaseConnection.getDatabaseConnection();
 				PreparedStatement stmt = conn.prepareStatement(SQL,  PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -41,9 +40,8 @@ public class QuestionsDAO {
 			stmt.setObject(5, question.getExplanations());
 			stmt.setObject(6, question.getHint1());
 			stmt.setObject(7, question.getHint2());
-			stmt.setObject(8, new ByteArrayInputStream(question.getImage()));
-			stmt.setObject(9, question.getOtherObservations());
-			stmt.setObject(10, question.getQuestionNumber());
+			stmt.setObject(8, question.getOtherObservations());
+			stmt.setObject(9, question.getQuestionNumber());
 			
 			stmt.executeUpdate();
 			ResultSet rs = stmt.getGeneratedKeys();
