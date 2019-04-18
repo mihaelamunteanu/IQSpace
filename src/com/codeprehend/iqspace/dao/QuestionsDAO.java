@@ -26,8 +26,8 @@ public class QuestionsDAO {
 		Long generatedId = -1L;
 		String SQL = "INSERT into questions "
 				+ "(test_id, question, question_type, answer, answer_explanations, "
-				+ "hint1, hint2, other_observations, question_number) "
-				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+				+ "hint1, hint2, other_observations, question_number, wrong_answer1, wrong_answer2) "
+				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 		
 		try (Connection conn = DatabaseConnection.getDatabaseConnection();
 				PreparedStatement stmt = conn.prepareStatement(SQL,  PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -42,6 +42,8 @@ public class QuestionsDAO {
 			stmt.setObject(7, question.getHint2());
 			stmt.setObject(8, question.getOtherObservations());
 			stmt.setObject(9, question.getQuestionNumber());
+			stmt.setObject(10, question.getWrongAnswer1());
+			stmt.setObject(11, question.getWrongAnswer2());
 			
 			stmt.executeUpdate();
 			ResultSet rs = stmt.getGeneratedKeys();
@@ -74,7 +76,8 @@ public class QuestionsDAO {
 				Question question = new Question(rs.getLong("id"), id, rs.getString("question"), 
 						rs.getString("question_type"), rs.getString("answer"), rs.getString("answer_explanations"),
 						rs.getString("hint1"), rs.getString("hint2"),
-						rs.getString("other_observations"), rs.getLong("question_number"), image);
+						rs.getString("other_observations"), rs.getLong("question_number"), image,
+						rs.getString("wrong_answer1"), rs.getString("wrong_answer2"));
 				questionsForTest.add(question);
 			}
 			rs.close();

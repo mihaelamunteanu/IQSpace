@@ -20,6 +20,8 @@ public class Question {
 	private String hint2;
 	private Long questionNumber;
 	private String otherObservations;
+	private String wrongAnswer1;
+	private String wrongAnswer2;
 	
 	
 	/**
@@ -30,10 +32,27 @@ public class Question {
 	}
 
 	/**
+	 * Constructor with parameters to set all the basic variables
+	 */
+	public Question(Long id, Long testId, Long questionNumber, String question, 
+			String questionType, String answer, 
+			String wrongAnswer1, String wrongAnswer2){
+		this.id = id;
+		this.testId = testId;
+		this.question = question;
+		this.questionType = questionType;
+		this.answer = answer;
+		this.questionNumber = questionNumber;
+		this.wrongAnswer1 = wrongAnswer1;
+		this.wrongAnswer2 = wrongAnswer2;
+	}
+	
+	/**
 	 * Constructor with parameters without id - needed before being saved to DB.
 	 */
 	public Question(Long testId, String question, String questionType, String answer, String explanations,
-			String hint1, String hint2, String otherObservations, Long questionNumber, byte[] image) {
+			String hint1, String hint2, String otherObservations, Long questionNumber, byte[] image,
+			String wrongAnswer1, String wrongAnswer2) {
 		this.testId = testId;
 		this.question = question;
 		this.questionType = questionType;
@@ -44,6 +63,8 @@ public class Question {
 		this.otherObservations = otherObservations;
 		this.questionNumber = questionNumber;
 		this.image = image;
+		this.wrongAnswer1 = wrongAnswer1;
+		this.wrongAnswer2 = wrongAnswer2;
 	}
 	
 	/**
@@ -51,7 +72,8 @@ public class Question {
 	 */
 	public Question(Long id, Long testId, String question, String questionType, String answer, 
 			String explanations, String hint1, String hint2, 
-			String otherObservations, Long questionNumber, byte[] image){
+			String otherObservations, Long questionNumber, byte[] image,
+			String wrongAnswer1, String wrongAnswer2){
 		this.id = id;
 		this.testId = testId;
 		this.question = question;
@@ -63,6 +85,8 @@ public class Question {
 		this.otherObservations = otherObservations;
 		this.questionNumber = questionNumber;
 		this.image = image;
+		this.wrongAnswer1 = wrongAnswer1;
+		this.wrongAnswer2 = wrongAnswer2;
 	}
 
 
@@ -153,6 +177,21 @@ public class Question {
 	public void setQuestionNumber(Long questionNumber) {
 		this.questionNumber = questionNumber;
 	}
-	
+
+	public String getWrongAnswer1() {
+		return wrongAnswer1;
+	}
+
+	public void setWrongAnswer1(String wrongAnswer1) {
+		this.wrongAnswer1 = wrongAnswer1;
+	}
+
+	public String getWrongAnswer2() {
+		return wrongAnswer2;
+	}
+
+	public void setWrongAnswer2(String wrongAnswer2) {
+		this.wrongAnswer2 = wrongAnswer2;
+	}
 	
 }

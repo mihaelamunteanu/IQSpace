@@ -34,7 +34,7 @@ public class IQSpaceLauncher {
 		Utils.loadProperties();
 		
 		Long testNumber = 1L;
-		if (args != null && args[0] != null) {
+		if (args != null && args.length > 0) {
 			try {
 				testNumber = Long.valueOf(args[0]);
 			} catch (Exception e) {

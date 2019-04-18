@@ -34,12 +34,27 @@ public class PopulateDatabase {
 //		   saveQuestionToDB(question7);
 		   
 		   
-		   Question question8 = new Question(1L, "Verisoara sotului meu are o sora pe nume Maria. Ce este Maria pentru sora sotului meu?",
-				   "logica", "verisoara", 
-				   "Fratii/surorile au aceasi grad de rudenie cu toate rudele.", null, null, 
-				  null, 8L, null);
+//		   Question question8 = new Question(1L, "Verisoara sotului meu are o sora pe nume Maria. Ce este Maria pentru sora sotului meu?",
+//				   "logica", "verisoara", 
+//				   "Fratii/surorile au aceasi grad de rudenie cu toate rudele.", null, null, 
+//				  null, 8L, null);
+//		   
+//		   saveQuestionToDB(question8);
 		   
-		   saveQuestionToDB(question8);
+		   Question question = new Question();
+		   question.setTestId(1L);
+		   question.setQuestionNumber(11L);
+		   question.setQuestionType("matematica");
+		   
+		   question.setQuestion("   Care este egalitatea corecta dintre cele de mai sus? ");
+		   question.setAnswer("Toate");
+		   question.setWrongAnswer1("Nici una");
+		   question.setWrongAnswer2("b)");
+		   
+		   question.setHint1("Adunarea si inmultirea sunt comutative");
+		   question.setExplanations("(a+b) la patrat este = (a+b)x(a+b)=axa+axb+bxa+bxb = axa+axb+axb+bxb = a^2+2xaxb+b^2");
+		   
+		   saveQuestionToDB(question);
 	   }
 	   
 	   private static void saveQuestionToDB(Question question) throws IOException {
