@@ -87,4 +87,63 @@ public class QuestionsDAO {
 
 		return questionsForTest;
 	}
+	
+	public static List<Question> getQuestionByTestIdAndQuestionNumber(Long id, Long no) {
+		List<Question> questionsForTest =new ArrayList<Question>();
+
+		String SQL = "SELECT * FROM questions WHERE test_id = ? AND question_number = ? ORDER BY question_number ASC, id DESC;";
+		
+		try (Connection conn = DatabaseConnection.getDatabaseConnection();
+				PreparedStatement stmt = conn.prepareStatement(SQL)) {
+			stmt.setObject(1, id);
+			stmt.setObject(2, no);
+			
+			LOGGER.log(Level.INFO, "Retrieve qustion: " + stmt.toString());	
+			
+			ResultSet rs = stmt.executeQuery();
+			while (rs != null && rs.next()) {
+				byte[] image = rs.getBytes("image1");
+				Question question = new Question(rs.getLong("id"), id, rs.getString("question"), 
+						rs.getString("question_type"), rs.getString("answer"), rs.getString("answer_explanations"),
+						rs.getString("hint1"), rs.getString("hint2"),
+						rs.getString("other_observations"), rs.getLong("question_number"), image,
+						rs.getString("wrong_answer1"), rs.getString("wrong_answer2"));
+				questionsForTest.add(question);
+			}
+			rs.close();
+		} catch (SQLException ex) {
+			System.out.println(ex.getMessage());
+		}
+
+		return questionsForTest;
+	}
+	
+	public static Long updateQuestion(Question question) throws Exception {
+		String SQL = "UPDATE questions	 " + 
+				"SET test_id = ?, question_type = ?, question_number = ?, question = ?, "
+				+ "answer = ?, hint1 = ?, wrong_answer1 = ?, wrong_answer2 = ?, " 
+				+ "answer_explanations = ?, other_observations = ? " + 
+				"WHERE id = ?;";
+		
+		try (Connection conn = DatabaseConnection.getDatabaseConnection();
+				PreparedStatement stmt = conn.prepareStatement(SQL, PreparedStatement.RETURN_GENERATED_KEYS);) {
+			stmt.setObject(1, question.getTestId());
+			stmt.setObject(2, question.getQuestionType());
+			stmt.setObject(3, question.getQuestionNumber());
+			stmt.setObject(4, question.getQuestion());
+			stmt.setObject(5, question.getAnswer());
+			stmt.setObject(6, question.getHint1());
+			stmt.setObject(7, question.getWrongAnswer1());
+			stmt.setObject(8, question.getWrongAnswer2());
+			stmt.setObject(9, question.getExplanations());
+			stmt.setObject(10, question.getOtherObservations());
+			stmt.setObject(11, question.getId());
+			
+			LOGGER.log(Level.INFO, stmt.toString());
+						
+			stmt.executeUpdate();
+ 		} 
+		
+		return question.getId();
+	}
 }

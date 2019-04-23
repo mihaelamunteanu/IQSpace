@@ -11,6 +11,7 @@ public class Test {
 	private String observations;
 	private String testType;
 	private Long numberOfQuestions;
+	private LocalDate lastModification;
 	
 	public Test(){
 		
@@ -70,10 +71,6 @@ public class Test {
 		this.observations = observations;
 	}
 
-	public void setPrimaConsultatie(LocalDate primaConsultatie) {
-		this.creationDate = primaConsultatie;
-	}
-
 	public String getTestType() {
 		return testType;
 	}
@@ -88,6 +85,14 @@ public class Test {
 	
 	public void setNumberOfQuestions(Long numberOfQuestions) {
 		this.numberOfQuestions = numberOfQuestions;
+	}
+
+	public LocalDate getLastModification() {
+		return lastModification;
+	}
+
+	public void setLastModification(LocalDate lastModification) {
+		this.lastModification = lastModification;
 	}
 	
  }

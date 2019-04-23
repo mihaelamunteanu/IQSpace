@@ -38,7 +38,7 @@ public class IQSpaceGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	public static String numeFereastraPrincipala = 
-			"Test IQSpace " + " " + IQSpaceLauncher.versiune + " @codeprehend.com " + 
+			"copyright IQSpace -  Test IQSpace " + " " + IQSpaceLauncher.versiune + " @codeprehend.com " + 
 					Utils.fromDateToString(LocalDate.now());
 
 	public static String questionString = "Question";
