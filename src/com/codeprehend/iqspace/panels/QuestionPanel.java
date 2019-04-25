@@ -6,7 +6,9 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.List;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,8 +21,11 @@ import javax.swing.border.LineBorder;
 import com.codeprehend.iqspace.IQSpaceGUI;
 import com.codeprehend.iqspace.listeners.BackButtonActionListener;
 import com.codeprehend.iqspace.listeners.NextQuestionButtonActionListener;
+import com.codeprehend.iqspace.listeners.RadioButtonListner;
+import com.codeprehend.iqspace.resources.AnswersPosition;
 import com.codeprehend.iqspace.resources.Question;
 import com.codeprehend.iqspace.resources.Test;
+import com.codeprehend.iqspace.util.Constants;
 
 public class QuestionPanel extends JPanel {
 	/**
@@ -42,7 +47,7 @@ public class QuestionPanel extends JPanel {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void  loadQuestionPanel(Question question, Test test) {
+	public void  loadQuestionPanel(Question question, Test test, List<AnswersPosition> answersPosition) {
 		//JPanel GridBagLayoutPanel = new JPanel();
 		this.setBorder(new LineBorder(new Color(0, 0, 0)));
 		parentPanel.add(this, BorderLayout.CENTER);
@@ -146,31 +151,45 @@ public class QuestionPanel extends JPanel {
 		glb_questionTextLbl.gridy = 0;
 		questionSectionPanel.add(questionText, glb_questionTextLbl);
 		
-		JRadioButton rdbtnC = new JRadioButton("  c)");
-		rdbtnC.setHorizontalAlignment(SwingConstants.LEFT);
-		GridBagConstraints gbc_rdbtnC = new GridBagConstraints();
-		gbc_rdbtnC.anchor = GridBagConstraints.WEST;
-		gbc_rdbtnC.insets = new Insets(0, 0, 5, 0);
-		gbc_rdbtnC.gridx = 0;
-		gbc_rdbtnC.gridy = 1;
-		questionSectionPanel.add(rdbtnC, gbc_rdbtnC);
+		AnswersPosition positonsForAnswers = answersPosition.get(question.getQuestionNumber().intValue()-1);
 		
-		JRadioButton rdbtnB = new JRadioButton("  b)" + question.getAnswer());
+		JRadioButton rdbtnA = new JRadioButton("  " + question.getAnswer());
+		rdbtnA.setHorizontalAlignment(SwingConstants.LEFT);
+		rdbtnA.setName(Constants.CORRECT_ANSWER);
+		rdbtnA.addActionListener(new RadioButtonListner(parentPanel));
+		GridBagConstraints gbc_rdbtnA = new GridBagConstraints();
+		gbc_rdbtnA.anchor = GridBagConstraints.WEST;
+		gbc_rdbtnA.insets = new Insets(0, 0, 5, 0);
+		gbc_rdbtnA.gridx = 0;
+		gbc_rdbtnA.gridy = positonsForAnswers.getPositionOfCorrectAnswer();
+		questionSectionPanel.add(rdbtnA, gbc_rdbtnA); 
+		
+		JRadioButton rdbtnB = new JRadioButton("  " + question.getWrongAnswer1());
 		rdbtnB.setHorizontalAlignment(SwingConstants.LEFT);
+		rdbtnB.setName(Constants.WRONG_ANSWER1);
+		rdbtnB.addActionListener(new RadioButtonListner(parentPanel));
 		GridBagConstraints gbc_rdbtnB = new GridBagConstraints();
 		gbc_rdbtnB.anchor = GridBagConstraints.WEST;
 		gbc_rdbtnB.insets = new Insets(0, 0, 5, 0);
 		gbc_rdbtnB.gridx = 0;
-		gbc_rdbtnB.gridy = 2;
+		gbc_rdbtnB.gridy = positonsForAnswers.getPositionOfWrongAnswer1();
 		questionSectionPanel.add(rdbtnB, gbc_rdbtnB);
 		
-		JRadioButton rdbtnA = new JRadioButton("  a)");
-		rdbtnA.setHorizontalAlignment(SwingConstants.LEFT);
-		GridBagConstraints gbc_rdbtnA = new GridBagConstraints();
-		gbc_rdbtnA.anchor = GridBagConstraints.WEST;
-		gbc_rdbtnA.gridx = 0;
-		gbc_rdbtnA.gridy = 3;
-		questionSectionPanel.add(rdbtnA, gbc_rdbtnA);
+		JRadioButton rdbtnC = new JRadioButton("  " + question.getWrongAnswer2());
+		rdbtnC.setName(Constants.WRONG_ANSWER2);
+		rdbtnC.setHorizontalAlignment(SwingConstants.LEFT);
+		rdbtnC.addActionListener(new RadioButtonListner(parentPanel));
+		GridBagConstraints gbc_rdbtnC = new GridBagConstraints();
+		gbc_rdbtnC.anchor = GridBagConstraints.WEST;
+		gbc_rdbtnC.gridx = 0;
+		gbc_rdbtnC.gridy = positonsForAnswers.getPositionOfWrongAnswer2();
+		questionSectionPanel.add(rdbtnC, gbc_rdbtnC);
+		
+	    //Group the radio buttons.
+	    ButtonGroup group = new ButtonGroup();
+	    group.add(rdbtnA);
+	    group.add(rdbtnB);
+	    group.add(rdbtnC);
 		
 		JPanel buttonPanel = new JPanel();
 		GridBagConstraints gbc_buttonPanel = new GridBagConstraints();
@@ -208,6 +227,8 @@ public class QuestionPanel extends JPanel {
 		//Action Listeners
 		backBtn.addActionListener(new BackButtonActionListener(this.parentPanel));
 		nextBtn.addActionListener(new NextQuestionButtonActionListener(this.parentPanel));
+		
+		this.doLayout();
 	}
 	
 }

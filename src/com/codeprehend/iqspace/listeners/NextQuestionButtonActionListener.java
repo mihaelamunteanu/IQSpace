@@ -15,7 +15,7 @@ public class NextQuestionButtonActionListener implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e){
 		int numberOfCurrentQuestion = mainWindow.getNumberOfCurrentQuestion();
-		if (mainWindow.getTestResource().getNumberOfQuestions() > numberOfCurrentQuestion) {
+		if (mainWindow.getTestResource().getNumberOfQuestions() >= numberOfCurrentQuestion + 1) {
 			Question question = mainWindow.getQuestionsForTest().get(numberOfCurrentQuestion);
 			numberOfCurrentQuestion = numberOfCurrentQuestion + 1;
 			mainWindow.setNumberOfCurrentQuestion(numberOfCurrentQuestion);

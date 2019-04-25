@@ -16,7 +16,7 @@ import com.codeprehend.iqspace.dao.QuestionsDAO;
 import com.codeprehend.iqspace.dao.TestsDAO;
 import com.codeprehend.iqspace.panels.QuestionPanel;
 import com.codeprehend.iqspace.panels.ResultPanel;
-import com.codeprehend.iqspace.resources.ObtainedAnswer;
+import com.codeprehend.iqspace.resources.AnswersPosition;
 import com.codeprehend.iqspace.resources.Question;
 import com.codeprehend.iqspace.resources.Test;
 import com.codeprehend.iqspace.util.Utils;
@@ -50,9 +50,9 @@ public class IQSpaceGUI extends JFrame {
 	
 	Test testResource = null;
 	private List<Question> questionsForTest = null;
-	private List<ObtainedAnswer> obtainedAnswers = new ArrayList<>();
+	private List<String> obtainedAnswers = new ArrayList<>();
+	private List<AnswersPosition> answerPositions = new ArrayList<>();
 	private int numberOfCurrentQuestion = 1;
-	private Long usedTest;
 	
 	public IQSpaceGUI(){
 		super();
@@ -90,20 +90,28 @@ public class IQSpaceGUI extends JFrame {
 		
 		//Create main panel
 		questionPanel = new QuestionPanel(this);
-//		resultsPanel = new ResultPanel(this);
+		resultsPanel = new ResultPanel(this);
 		
+		this.doLayout();
 	    this.setVisible(true);
 	}
 	
+	private void resetObtainedAnswers( ) {
+		for (int i=0; i<testResource.getNumberOfQuestions(); i++) {
+			obtainedAnswers.add(null);
+		}
+	}
 	public void reset() {
-		obtainedAnswers = new ArrayList<>();
 		numberOfCurrentQuestion = 0;
+		resetObtainedAnswers();
 	}
 	
 	public void loadTest(Long testId) {
-		usedTest = testId;
 		testResource = TestsDAO.getTestById(testId);
 		questionsForTest = QuestionsDAO.getQuestionsByTestId(testId);
+		answerPositions = Utils.getRandomPositionsForAnswers(testResource.getNumberOfQuestions());
+		resetObtainedAnswers();
+		
 		showQuestionPanel(questionsForTest.get(0));
 	}
 	
@@ -126,8 +134,10 @@ public class IQSpaceGUI extends JFrame {
 		questionPanel = new QuestionPanel(this);
 		this.add(questionPanel);
 
-		questionPanel.loadQuestionPanel(question, testResource);
+		questionPanel.loadQuestionPanel(question, testResource, 
+				answerPositions);
 		questionPanel.setVisible(true);
+		resultsPanel.setVisible(false);
 	}
 	
 	public void showResultsPanel(Test test) {
@@ -135,12 +145,9 @@ public class IQSpaceGUI extends JFrame {
 		resultsPanel = new ResultPanel(this);
 		this.add(resultsPanel);
 		
-		resultsPanel.setTest(test);
-		resultsPanel.setObtainedAnswers(obtainedAnswers);
-		resultsPanel.loadResultsPanel(test);
-		resultsPanel.setVisible(true);
-		
+		resultsPanel.loadResultPanel(questionsForTest, testResource, obtainedAnswers, answerPositions);
 		questionPanel.setVisible(false);
+		resultsPanel.setVisible(true);
 	}
 	
 	//** Getters and setters //
@@ -153,7 +160,7 @@ public class IQSpaceGUI extends JFrame {
 		return resultsPanel;
 	}
 
-	public List<ObtainedAnswer> getObtainedAnswers() {
+	public List<String> getObtainedAnswers() {
 		return obtainedAnswers;
 	}
 
@@ -171,6 +178,18 @@ public class IQSpaceGUI extends JFrame {
 
 	public List<Question> getQuestionsForTest() {
 		return questionsForTest;
+	}
+
+	public List<AnswersPosition> getAnswerPositions() {
+		return answerPositions;
+	}
+
+	public void setAnswerPositions(List<AnswersPosition> answerPositions) {
+		this.answerPositions = answerPositions;
+	}
+
+	public void setObtainedAnswers(List<String> obtainedAnswers) {
+		this.obtainedAnswers = obtainedAnswers;
 	}
 	
 }

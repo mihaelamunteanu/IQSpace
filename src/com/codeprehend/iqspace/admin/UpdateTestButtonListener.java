@@ -52,15 +52,16 @@ public class UpdateTestButtonListener implements ActionListener {
 		testFromPanel.setObservations(mainWindow.getTestObservations().getText());
 		testFromPanel.setTestName(mainWindow.getTestTitle().getText());
 		testFromPanel.setTestType(mainWindow.getTestType().getText());
-		testFromPanel.setLastModification(LocalDate.now());
+		testFromPanel.setCreationDate(test.getCreationDate());
+		testFromPanel.setId(test.getId());
 		
 		if (test != null) {
 			//update question 
 			try {
 				TestsDAO.updateTest(testFromPanel);
-				JOptionPane.showMessageDialog(mainWindow, null, 
+				JOptionPane.showMessageDialog(mainWindow, 
 						"Testul " + testName + " cu id-ul " + testNo + "a fost updatat.", 
-						JOptionPane.INFORMATION_MESSAGE);
+						"Test update", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception exception) {
 				JOptionPane.showMessageDialog(mainWindow, exception.getMessage(), 
 						"Eroare la updatarea testului in DB. Vezi log.", JOptionPane.ERROR_MESSAGE);

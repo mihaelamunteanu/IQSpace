@@ -18,7 +18,7 @@ public class BackButtonActionListener implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e){
 		int numberOfCurrentQuestion = mainWindow.getNumberOfCurrentQuestion();
-		if (numberOfCurrentQuestion > 2) {
+		if (numberOfCurrentQuestion >= 2) {
 			numberOfCurrentQuestion = numberOfCurrentQuestion - 1;
 			Question question = mainWindow.getQuestionsForTest().get(numberOfCurrentQuestion - 1);
 			mainWindow.setNumberOfCurrentQuestion(numberOfCurrentQuestion);

@@ -76,8 +76,9 @@ public class TestsDAO {
 			stmt.setObject(3, test.getCreationDate());
 			stmt.setObject(4, test.getTestType());
 			stmt.setObject(5, test.getNumberOfQuestions());
-			stmt.setObject(6, test.getId());
-			stmt.setObject(7, test.getLastModification());
+			stmt.setObject(6, LocalDate.now());
+			stmt.setObject(7, test.getId());
+			
 			
 			LOGGER.log(Level.INFO, stmt.toString());
 						
