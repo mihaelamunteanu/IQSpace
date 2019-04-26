@@ -136,8 +136,8 @@ public class IQSpaceGUI extends JFrame {
 
 		questionPanel.loadQuestionPanel(question, testResource, 
 				answerPositions);
-		questionPanel.setVisible(true);
 		resultsPanel.setVisible(false);
+		questionPanel.setVisible(true);
 	}
 	
 	public void showResultsPanel(Test test) {

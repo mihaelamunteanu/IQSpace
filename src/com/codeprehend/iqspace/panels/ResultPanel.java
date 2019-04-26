@@ -2,6 +2,7 @@ package com.codeprehend.iqspace.panels;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -13,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 import com.codeprehend.iqspace.IQSpaceGUI;
+import com.codeprehend.iqspace.listeners.ExplanationActionListener;
+import com.codeprehend.iqspace.listeners.RestartTestActionListener;
 import com.codeprehend.iqspace.resources.AnswersPosition;
 import com.codeprehend.iqspace.resources.Question;
 import com.codeprehend.iqspace.resources.Test;
@@ -53,6 +56,7 @@ public class ResultPanel extends JPanel {
 		
 		JLabel lblAnswers = new JLabel("Raspunsuri");
 		GridBagConstraints gbc_lblAnswers = new GridBagConstraints();
+		lblAnswers.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		gbc_lblAnswers.insets = new Insets(0, 0, 5, 5);
 		gbc_lblAnswers.gridx = 2;
 		gbc_lblAnswers.gridy = 2;
@@ -98,34 +102,59 @@ public class ResultPanel extends JPanel {
 					break;
 				}
 			
-			JLabel lblNewLabel = new JLabel(" ");
-			if (choseOption.equals(correctOption)) {
-				lblNewLabel = new JLabel(" Ati ales " + choseOption + " - OK");
-			} else {
-				lblNewLabel = new JLabel(" " + choseOption + " - incorect. Raspunsul corect " + correctOption);
-			}
-				
+			JLabel lblNewLabel = new JLabel(" " + (i+1));
 			GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+			
+			if (choseOption.equals(correctOption)) {
+				lblNewLabel = new JLabel((i+1) + ". " + choseOption);
+				lblNewLabel.setForeground(Color.BLACK);
+			} else {
+				lblNewLabel = new JLabel((i+1) + ". " +  choseOption + ". Raspunsul corect: " + correctOption);
+				lblNewLabel.setForeground(Color.RED);
+			}
+			lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));	
+
 			gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_lblNewLabel.gridx = 2;
 			gbc_lblNewLabel.gridy = gridy;
 			gbc_lblNewLabel.gridwidth = 3;
+			gbc_lblNewLabel.anchor = GridBagConstraints.WEST;
 			this.add(lblNewLabel, gbc_lblNewLabel);
 			
+			JLabel labelb = new JLabel(" ");
+			GridBagConstraints gbc_labelb = new GridBagConstraints();
+			gbc_labelb.insets = new Insets(0, 0, 5, 5);
+			gbc_labelb.gridx = 1;
+			gbc_labelb.gridy = gridy;
+			this.add(labelb, gbc_labelb);
+			
 			JButton btnNewButton = new JButton("Vezi explicatii");
+			btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 16));
+			btnNewButton.setName(String.valueOf((i+1)));
+			btnNewButton.addActionListener(new ExplanationActionListener(parentPanel));
 			GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 			gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
-			gbc_btnNewButton.gridx = 5;
+			gbc_btnNewButton.gridx = 6;
 			gbc_btnNewButton.gridy = gridy;
 			this.add(btnNewButton, gbc_btnNewButton);
 			
 			gridy = gridy + 1;
 		}
 		
+		JLabel labelz = new JLabel(" ");
+		GridBagConstraints gbc_labelz = new GridBagConstraints();
+		gbc_labelz.insets = new Insets(0, 0, 5, 5);
+		gbc_labelz.gridx = 1;
+		gbc_labelz.gridy = gridy++;
+		this.add(labelz, gbc_labelz);
+		
 		JButton btnReincepeTestul = new JButton("Reincepe testul");
+		btnReincepeTestul.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnReincepeTestul.addActionListener(new RestartTestActionListener(parentPanel));
 		GridBagConstraints gbc_btnReincepeTestul = new GridBagConstraints();
-		gbc_btnReincepeTestul.gridx = 5;
+		gbc_btnReincepeTestul.gridx = 2;
 		gbc_btnReincepeTestul.gridy = gridy++;
+		gbc_btnReincepeTestul.gridwidth = 3;
 		this.add(btnReincepeTestul, gbc_btnReincepeTestul);
 		this.doLayout();
 		

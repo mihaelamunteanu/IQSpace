@@ -9,6 +9,7 @@ import java.awt.Insets;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,6 +27,8 @@ import com.codeprehend.iqspace.resources.AnswersPosition;
 import com.codeprehend.iqspace.resources.Question;
 import com.codeprehend.iqspace.resources.Test;
 import com.codeprehend.iqspace.util.Constants;
+import com.codeprehend.iqspace.util.ImageSettings;
+import com.codeprehend.iqspace.util.Utils;
 
 public class QuestionPanel extends JPanel {
 	/**
@@ -109,7 +112,7 @@ public class QuestionPanel extends JPanel {
 		gbl_scrollPanel.rowWeights = new double[]{1.0};
 		panel_1.setLayout(gbl_scrollPanel);
 		
-		JPanel image1Panel = new ImagePanel(test.getTestName(), question.getQuestionNumber());
+		JPanel image1Panel = new JPanel(); //new ImagePanel(test.getTestName(), question.getQuestionNumber());
 		scrollPane.setViewportView(image1Panel);
 		GridBagLayout gbl_imagePanel = new GridBagLayout();
 		gbl_imagePanel.columnWidths = new int[]{0};
@@ -117,6 +120,12 @@ public class QuestionPanel extends JPanel {
 		gbl_imagePanel.columnWeights = new double[]{1.0};
 		gbl_imagePanel.rowWeights = new double[]{1.0};
 		image1Panel.setLayout(gbl_imagePanel);
+		
+		JLabel contentPane = new JLabel();
+		contentPane.setIcon(new ImageIcon(ImageSettings.IMAGES_LOCATION + "\\" + test.getTestName() + "Q" + question.getQuestionNumber() + ".png")); 
+		contentPane.setLayout( new BorderLayout() );
+		image1Panel.add(contentPane);
+
 
 		
 		JScrollPane scrollPane2 = new JScrollPane();
@@ -143,7 +152,8 @@ public class QuestionPanel extends JPanel {
 		gbl_questionSectionPanel.rowWeights = new double[]{0.25, 0.25, 0.25, 0.25};
 		questionSectionPanel.setLayout(gbl_questionSectionPanel);
 		
-		JLabel questionText = new JLabel(question.getQuestion());
+		JLabel questionText = new JLabel(Utils.addHtml(question.getQuestion()));
+		questionText.setFont(new Font("Tahoma", Font.BOLD, 16));
 		GridBagConstraints glb_questionTextLbl = new GridBagConstraints();
 		glb_questionTextLbl.anchor = GridBagConstraints.WEST;
 		glb_questionTextLbl.insets = new Insets(0, 0, 5, 0);
@@ -153,7 +163,11 @@ public class QuestionPanel extends JPanel {
 		
 		AnswersPosition positonsForAnswers = answersPosition.get(question.getQuestionNumber().intValue()-1);
 		
-		JRadioButton rdbtnA = new JRadioButton("  " + question.getAnswer());
+		JRadioButton rdbtnA = new JRadioButton(Utils.addHtml("  " + AnswersPosition.getLetterForPosition(positonsForAnswers.getPositionOfCorrectAnswer()) 
+								+  " "  + question.getAnswer() ));
+//		rdbtnA.setText("<html>"+ AnswersPosition.getLetterForPosition(positonsForAnswers.getPositionOfCorrectAnswer()) 
+//								+  " "  + question.getAnswer() + " </html>" );
+		rdbtnA.setFont(new Font("Tahoma", Font.BOLD, 16));
 		rdbtnA.setHorizontalAlignment(SwingConstants.LEFT);
 		rdbtnA.setName(Constants.CORRECT_ANSWER);
 		rdbtnA.addActionListener(new RadioButtonListner(parentPanel));
@@ -164,7 +178,11 @@ public class QuestionPanel extends JPanel {
 		gbc_rdbtnA.gridy = positonsForAnswers.getPositionOfCorrectAnswer();
 		questionSectionPanel.add(rdbtnA, gbc_rdbtnA); 
 		
-		JRadioButton rdbtnB = new JRadioButton("  " + question.getWrongAnswer1());
+		JRadioButton rdbtnB = new JRadioButton(Utils.addHtml("  " + AnswersPosition.getLetterForPosition(positonsForAnswers.getPositionOfWrongAnswer1()) 
+								+  " "  + question.getWrongAnswer1()));
+//		rdbtnB.setText("<html> "+ AnswersPosition.getLetterForPosition(positonsForAnswers.getPositionOfWrongAnswer1()) 
+//		+  " "  + question.getWrongAnswer1() + " </html>" );
+		rdbtnB.setFont(new Font("Tahoma", Font.BOLD, 16));
 		rdbtnB.setHorizontalAlignment(SwingConstants.LEFT);
 		rdbtnB.setName(Constants.WRONG_ANSWER1);
 		rdbtnB.addActionListener(new RadioButtonListner(parentPanel));
@@ -175,7 +193,11 @@ public class QuestionPanel extends JPanel {
 		gbc_rdbtnB.gridy = positonsForAnswers.getPositionOfWrongAnswer1();
 		questionSectionPanel.add(rdbtnB, gbc_rdbtnB);
 		
-		JRadioButton rdbtnC = new JRadioButton("  " + question.getWrongAnswer2());
+		JRadioButton rdbtnC = new JRadioButton(Utils.addHtml("  " + AnswersPosition.getLetterForPosition(positonsForAnswers.getPositionOfWrongAnswer2()) 
+								+  " "  + question.getWrongAnswer2()));
+//		rdbtnC.setText("<html> "+ AnswersPosition.getLetterForPosition(positonsForAnswers.getPositionOfWrongAnswer2()) 
+//		+  "</html> "  + question.getWrongAnswer2() + " " );
+		rdbtnC.setFont(new Font("Tahoma", Font.BOLD, 16));
 		rdbtnC.setName(Constants.WRONG_ANSWER2);
 		rdbtnC.setHorizontalAlignment(SwingConstants.LEFT);
 		rdbtnC.addActionListener(new RadioButtonListner(parentPanel));
@@ -206,6 +228,7 @@ public class QuestionPanel extends JPanel {
 		buttonPanel.setLayout(gbl_buttonPanel);
 		
 		JButton backBtn = new JButton(" <- Inapoi  ");
+		backBtn.setFont(new Font("Tahoma", Font.BOLD, 16));
 		GridBagConstraints gbc_btnBack = new GridBagConstraints();
 		gbc_btnBack.anchor = GridBagConstraints.WEST;
 		gbc_btnBack.insets = new Insets(0, 45, 0, 5);
@@ -215,6 +238,7 @@ public class QuestionPanel extends JPanel {
 		
 		JButton nextBtn = new JButton("Urmatoarea ->");
 		nextBtn.setVerticalAlignment(SwingConstants.TOP);
+		nextBtn.setFont(new Font("Tahoma", Font.BOLD, 16));
 		GridBagConstraints gbc_btnNext = new GridBagConstraints();
 		gbc_btnNext.insets = new Insets(0, 5, 0, 50);
 		gbc_btnNext.anchor = GridBagConstraints.EAST;

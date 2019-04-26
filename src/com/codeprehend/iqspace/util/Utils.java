@@ -21,6 +21,22 @@ public class Utils {
 	
 	public static Properties prop = new Properties();
 	
+	
+	/** swing components text can be controlled with html for wrapping etc. */
+	public static String addHtml(String originalText) {
+		StringBuffer htmlText = new StringBuffer("<html>");
+		while (originalText.contains("\n")) {
+			String paragraph = originalText.substring(0, originalText.indexOf("\n"));
+			originalText = originalText.substring(originalText.indexOf("\n") + 1);
+			htmlText.append(paragraph);
+		}
+		htmlText.append(originalText);
+		htmlText.append("</html>");
+		
+		String htmlTextString = htmlText.toString();
+		return htmlTextString;
+	}
+	
 	/**
 	 * Returns a random number between 1 and 3 (it will be used to choose from three options).
 	 * 
