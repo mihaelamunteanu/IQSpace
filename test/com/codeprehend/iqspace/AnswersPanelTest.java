@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JButton;
+import java.awt.Font;
 
 public class AnswersPanelTest extends JFrame {
 	/**
@@ -29,6 +30,7 @@ public class AnswersPanelTest extends JFrame {
 		GridBagLayout.setLayout(gbl_GridBagLayout);
 		
 		JLabel lblAnswers = new JLabel("Raspunsuri");
+		lblAnswers.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_lblAnswers = new GridBagConstraints();
 		gbc_lblAnswers.insets = new Insets(0, 0, 5, 5);
 		gbc_lblAnswers.gridx = 2;

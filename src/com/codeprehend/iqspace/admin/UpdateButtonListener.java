@@ -46,6 +46,7 @@ public class UpdateButtonListener implements ActionListener {
 		questionFromPanel.setQuestionType(mainWindow.getQuestionType().getText());
 		questionFromPanel.setWrongAnswer1(mainWindow.getWrongAnswer1().getText());
 		questionFromPanel.setWrongAnswer2(mainWindow.getWrongAnswer2().getText());
+		questionFromPanel.setImage(mainWindow.getImage().getText());
 		
 		if (questions != null && questions.size() > 0) {
 			//update question 

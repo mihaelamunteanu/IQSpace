@@ -15,7 +15,7 @@ public class Question {
 	private String answer;
 	private String explanations;
 	private String questionType;
-	private byte[] image;
+	private String image;
 	private String hint1;
 	private String hint2;
 	private Long questionNumber;
@@ -51,7 +51,7 @@ public class Question {
 	 * Constructor with parameters without id - needed before being saved to DB.
 	 */
 	public Question(Long testId, String question, String questionType, String answer, String explanations,
-			String hint1, String hint2, String otherObservations, Long questionNumber, byte[] image,
+			String hint1, String hint2, String otherObservations, Long questionNumber, String image,
 			String wrongAnswer1, String wrongAnswer2) {
 		this.testId = testId;
 		this.question = question;
@@ -72,7 +72,7 @@ public class Question {
 	 */
 	public Question(Long id, Long testId, String question, String questionType, String answer, 
 			String explanations, String hint1, String hint2, 
-			String otherObservations, Long questionNumber, byte[] image,
+			String otherObservations, Long questionNumber, String image,
 			String wrongAnswer1, String wrongAnswer2){
 		this.id = id;
 		this.testId = testId;
@@ -146,11 +146,11 @@ public class Question {
 		this.questionType = questionType;
 	}
 
-	public byte[] getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(byte[] image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 

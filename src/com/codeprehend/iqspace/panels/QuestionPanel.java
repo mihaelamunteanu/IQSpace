@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.File;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
@@ -122,7 +123,19 @@ public class QuestionPanel extends JPanel {
 		image1Panel.setLayout(gbl_imagePanel);
 		
 		JLabel contentPane = new JLabel();
-		contentPane.setIcon(new ImageIcon(ImageSettings.IMAGES_LOCATION + "\\" + test.getTestName() + "Q" + question.getQuestionNumber() + ".png")); 
+		String path1 = ImageSettings.IMAGES_LOCATION + "\\" + test.getTestName() + "Q" + question.getQuestionNumber() + ".png";
+		String path2 = ImageSettings.IMAGES_LOCATION + "\\" + question.getImage(); 
+		String defaultPath = ImageSettings.IMAGES_LOCATION + "\\Default.png";
+		File tempFile = new File(path1);
+		if (tempFile.exists()) {
+			contentPane.setIcon(new ImageIcon(path1)); 
+		} else {
+			File tempFile2 = new File(path2);
+			if (question.getImage() != null && !question.getImage().isEmpty() 
+					&& !"null".equalsIgnoreCase(question.getImage()) && tempFile2.exists()) 
+				contentPane.setIcon(new ImageIcon(path2)); 
+			else contentPane.setIcon(new ImageIcon(defaultPath));
+		}
 		contentPane.setLayout( new BorderLayout() );
 		image1Panel.add(contentPane);
 

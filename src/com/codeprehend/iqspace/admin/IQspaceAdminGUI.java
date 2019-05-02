@@ -17,6 +17,7 @@ import javax.swing.SwingConstants;
 
 import com.codeprehend.iqspace.resources.Question;
 import com.codeprehend.iqspace.resources.Test;
+import com.codeprehend.iqspace.util.ImageSettings;
 
 public class IQspaceAdminGUI extends JFrame {
 	
@@ -46,6 +47,7 @@ public class IQspaceAdminGUI extends JFrame {
 	private JTextArea wrongAnswer2;
 	private JTextArea hint1;
 	private JTextArea explanations;
+	private JTextArea image;
 	private JTextArea otherObservations;
 	private JTextArea questionType;
 	
@@ -320,7 +322,7 @@ public class IQspaceAdminGUI extends JFrame {
 		gbc_lblImagine.gridy = gridy;
 		MainPanel.add(lblImagine, gbc_lblImagine);
 		
-		JTextArea textArea_3 = new JTextArea();
+		image = new JTextArea();
 		GridBagConstraints gbc_textArea_3 = new GridBagConstraints();
 		gbc_textArea_3.gridwidth = 5;
 		gbc_textArea_3.insets = new Insets(0, 0, 5, 5);
@@ -328,7 +330,7 @@ public class IQspaceAdminGUI extends JFrame {
 		gbc_textArea_3.gridx = 1;
 		gbc_textArea_3.gridy = gridy++;
 		gbc_textArea_3.gridheight = 2;
-		MainPanel.add(textArea_3, gbc_textArea_3);
+		MainPanel.add(image, gbc_textArea_3);
 		
 		JLabel label10 = new JLabel(" ");
 		GridBagConstraints gbc_label10 = new GridBagConstraints();
@@ -833,6 +835,14 @@ public class IQspaceAdminGUI extends JFrame {
 	public void setTestNumberOfQuestions(JTextField testNumberOfQuestions) {
 		this.testNumberOfQuestions = testNumberOfQuestions;
 	}
+	
+	public JTextArea getImage() {
+		return image;
+	}
+
+	public void setImage(JTextArea image) {
+		this.image = image;
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -845,6 +855,8 @@ public class IQspaceAdminGUI extends JFrame {
 	public Question getQuestion() {
 		return question;
 	}
+	
+	
 
 	public void setQuestion(Question question) {
 		this.question = question;
@@ -858,6 +870,7 @@ public class IQspaceAdminGUI extends JFrame {
 		this.questionType.setText(question.getQuestionType());
 		this.txtQuestionNumber.setText(String.valueOf(question.getQuestionNumber()));
 		this.txtQuestionTestId.setText(String.valueOf(question.getTestId()));
+		this.image.setText(ImageSettings.IMAGES_LOCATION + "/" + question.getImage());
 	}
 	
 	public void setTest(Test test) {
@@ -882,6 +895,7 @@ public class IQspaceAdminGUI extends JFrame {
 		this.questionType.setText("");
 		this.txtQuestionNumber.setText("");
 		this.txtQuestionTestId.setText("");
+		this.image.setText("");
 		
 		this.testCreationDate.setText("");
 		this.testModificationDate.setText("");

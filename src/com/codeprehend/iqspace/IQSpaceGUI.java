@@ -102,7 +102,7 @@ public class IQSpaceGUI extends JFrame {
 		}
 	}
 	public void reset() {
-		numberOfCurrentQuestion = 0;
+		numberOfCurrentQuestion = 1;
 		resetObtainedAnswers();
 	}
 	
