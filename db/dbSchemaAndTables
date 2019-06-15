@@ -1,0 +1,519 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 11.1
+-- Dumped by pg_dump version 11.1
+
+-- Started on 2019-06-15 16:34:16
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 2870 (class 1262 OID 32768)
+-- Name: IQSpaceTest; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE "IQSpaceTest" WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'English_United States.1252' LC_CTYPE = 'English_United States.1252';
+
+
+ALTER DATABASE "IQSpaceTest" OWNER TO postgres;
+
+\connect "IQSpaceTest"
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 203 (class 1259 OID 32810)
+-- Name: questions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.questions (
+    id bigint NOT NULL,
+    test_id bigint NOT NULL,
+    question_type character varying NOT NULL,
+    question character varying(1000) NOT NULL,
+    hint1 character varying(300),
+    hint2 character varying(300),
+    other_observations character varying(500),
+    question_number bigint NOT NULL,
+    answer character varying NOT NULL,
+    answer_explanations character varying(1000),
+    wrong_answer1 character varying,
+    wrong_answer2 character varying,
+    image1 character varying DEFAULT 'Default.png'::character varying
+);
+
+
+ALTER TABLE public.questions OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1259 OID 32808)
+-- Name: questions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.questions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.questions_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2871 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: questions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.questions_id_seq OWNED BY public.questions.id;
+
+
+--
+-- TOC entry 199 (class 1259 OID 32781)
+-- Name: tests; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.tests (
+    id bigint NOT NULL,
+    test_name character varying NOT NULL,
+    observations character varying,
+    creation_date date NOT NULL,
+    test_type character varying NOT NULL,
+    number_of_questions bigint DEFAULT 20,
+    modification_date date DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.tests OWNER TO postgres;
+
+--
+-- TOC entry 198 (class 1259 OID 32779)
+-- Name: test_results_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.test_results_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.test_results_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2872 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: test_results_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.test_results_id_seq OWNED BY public.tests.id;
+
+
+--
+-- TOC entry 201 (class 1259 OID 32792)
+-- Name: visitor_test_result; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.visitor_test_result (
+    id bigint NOT NULL,
+    test_date date NOT NULL,
+    test_result bigint NOT NULL,
+    test_observation character varying(300),
+    used_mail character varying(100),
+    visitor_id bigint NOT NULL,
+    test_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.visitor_test_result OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 32790)
+-- Name: visitor_test_result_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.visitor_test_result_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.visitor_test_result_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2873 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: visitor_test_result_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.visitor_test_result_id_seq OWNED BY public.visitor_test_result.id;
+
+
+--
+-- TOC entry 197 (class 1259 OID 32773)
+-- Name: visitors; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.visitors (
+    id bigint NOT NULL,
+    mail character varying(60),
+    subscription_date date NOT NULL,
+    first_name character varying(60),
+    last_name character varying(60),
+    other_info character varying(200),
+    telephone_number character varying(20)
+);
+
+
+ALTER TABLE public.visitors OWNER TO postgres;
+
+--
+-- TOC entry 196 (class 1259 OID 32771)
+-- Name: vizitors_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.vizitors_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.vizitors_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2874 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: vizitors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.vizitors_id_seq OWNED BY public.visitors.id;
+
+
+--
+-- TOC entry 205 (class 1259 OID 32827)
+-- Name: wrong_answers; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.wrong_answers (
+    id bigint NOT NULL,
+    question_id bigint NOT NULL,
+    wrong_answer character varying(500) NOT NULL,
+    other_observations character varying(300)
+);
+
+
+ALTER TABLE public.wrong_answers OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 32825)
+-- Name: wrong_answers_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.wrong_answers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.wrong_answers_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2875 (class 0 OID 0)
+-- Dependencies: 204
+-- Name: wrong_answers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.wrong_answers_id_seq OWNED BY public.wrong_answers.id;
+
+
+--
+-- TOC entry 2717 (class 2604 OID 32813)
+-- Name: questions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.questions ALTER COLUMN id SET DEFAULT nextval('public.questions_id_seq'::regclass);
+
+
+--
+-- TOC entry 2713 (class 2604 OID 32784)
+-- Name: tests id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tests ALTER COLUMN id SET DEFAULT nextval('public.test_results_id_seq'::regclass);
+
+
+--
+-- TOC entry 2716 (class 2604 OID 32795)
+-- Name: visitor_test_result id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.visitor_test_result ALTER COLUMN id SET DEFAULT nextval('public.visitor_test_result_id_seq'::regclass);
+
+
+--
+-- TOC entry 2712 (class 2604 OID 32776)
+-- Name: visitors id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.visitors ALTER COLUMN id SET DEFAULT nextval('public.vizitors_id_seq'::regclass);
+
+
+--
+-- TOC entry 2719 (class 2604 OID 32830)
+-- Name: wrong_answers id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.wrong_answers ALTER COLUMN id SET DEFAULT nextval('public.wrong_answers_id_seq'::regclass);
+
+
+--
+-- TOC entry 2862 (class 0 OID 32810)
+-- Dependencies: 203
+-- Data for Name: questions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.questions (id, test_id, question_type, question, hint1, hint2, other_observations, question_number, answer, answer_explanations, wrong_answer1, wrong_answer2, image1) VALUES (4, 1, 'astronomie', 'Cu ce numar se continua sirul?', 'Sirul este facut din numere prime', NULL, 'none', 4, '23', 'Numerele prime sunt cele care se impart doar la 1 si la ele insele (pentru ca orice numar se imparte la 1 si la el insasi) ', NULL, NULL, NULL);
+INSERT INTO public.questions (id, test_id, question_type, question, hint1, hint2, other_observations, question_number, answer, answer_explanations, wrong_answer1, wrong_answer2, image1) VALUES (1, 1, 'math', 'Care este perimentrul, respectiv aria suprafetei din imagine', 'Perimetrul este suma laturilor. Aria patratului este patratul laturii.', NULL, 'none', 1, '7*4m resectiv 7m*7m= 49 m2', 'Perimetrul este suma tuturor laturilor. 
+			Patratul are 4 laturi egale => Perimetrul unui patrat cu latura de 7 metri va fi 4*7m = 28 m.
+			Aria patratului este patratul laturii adica 7^2m2 = 49m2', NULL, NULL, NULL);
+INSERT INTO public.questions (id, test_id, question_type, question, hint1, hint2, other_observations, question_number, answer, answer_explanations, wrong_answer1, wrong_answer2, image1) VALUES (13, 1, 'cromatica	', 'Este alb culoare', 'spectru', NULL, 'nici una', 14, 'depinde', '', 'da', 'nu', NULL);
+INSERT INTO public.questions (id, test_id, question_type, question, hint1, hint2, other_observations, question_number, answer, answer_explanations, wrong_answer1, wrong_answer2, image1) VALUES (14, 1, 'matematica', 'O sfoara de 5 metri incepe cu un nod pe capat si apoi din metru in metru. Cate noduri sunt pe sfoara?', '', NULL, '', 15, '6', 'In interir sunt 4 noduri si pe capete inca 2. Vedeti imaginea.', '4', '9', NULL);
+INSERT INTO public.questions (id, test_id, question_type, question, hint1, hint2, other_observations, question_number, answer, answer_explanations, wrong_answer1, wrong_answer2, image1) VALUES (15, 1, 'vocabular', 'Ce este discriminarea?', 'Stabilirea prin lege că o anumită categorie de fapte constituie infracțiune și se sancționează ca atare este incriminare juridica.', NULL, 'Definitia discriminarii luata de pe Wikipedia (romana), incriminare si aparare dexonline.', 9, 'O acțiune care presupune un tratament diferit, nedrept față de persoane din cauza apartenenței lor la un anumit grup social. Există mai multe forme de comportamente discriminatorii, dar toate au comun faptul că implică o anumită formă de excludere sau de respingere.', 'DISCRIMINÁRE, discriminări, s. f. Acțiunea de a discrimina și rezultatul ei. 1. Deosebire, distincție netă făcută între mai multe obiecte, idei etc. 
+2. Politică prin care un stat sau o categorie de cetățeni ai unui stat sunt lipsiți de anumite drepturi pe baza unor considerente nelegitime. ◊ Discriminare rasială = segregație. DEX ''09', 'Stabilirea prin lege că o anumită categorie de fapte constituie infracțiune și se sancționează ca atare.', 'O forma de a te proteja.', NULL);
+INSERT INTO public.questions (id, test_id, question_type, question, hint1, hint2, other_observations, question_number, answer, answer_explanations, wrong_answer1, wrong_answer2, image1) VALUES (16, 1, 'ecologie', 'Plasticul este', 'Anumite componente din materialele de plastic au nevoie de sute de ani pentru a se descompune.', NULL, 'Material ce promoveaza dezvoltarea durabila. Incurajam populatia sa constientizeze efectele materialelor folosite.', 10, 'un material ce se descompune foarte greu in conditii normale.', 'Descompunere: 
+Pahare de plastic 100 ani
+Doze de răcoritoare şi bere 200 ani
+PET-uri 300 ani. 
+Plasticul este un material foarte util in toate industriile dar este imprtant sa nu abuzam.', 'un material total inutil.', 'Un material ce se afla in mod firesc in natura fara interventia omului. ', NULL);
+INSERT INTO public.questions (id, test_id, question_type, question, hint1, hint2, other_observations, question_number, answer, answer_explanations, wrong_answer1, wrong_answer2, image1) VALUES (17, 1, 'istorie', 'Inventatorul primului limbaj de programare este.', 'Inventatorul primului program este o femeie.', NULL, 'Material ce promoveaza aportul femeilor in stiinta. ', 12, 'Ada Lovelace', 'Ada a propus ca masinaria domnului Charles Babane sa faca operatii mai complexe pe care sa le programeze chiar ea. ', 'Bill Gates', 'Steve Jobs', NULL);
+INSERT INTO public.questions (id, test_id, question_type, question, hint1, hint2, other_observations, question_number, answer, answer_explanations, wrong_answer1, wrong_answer2, image1) VALUES (6, 1, 'biologie', 'Cate picioare au crustaceele?', '', NULL, '', 6, '10', 'Crustaceele au 5 perechi de membre, iar cele din fata sunt, de obicei, transformate in clesti puternici.O pereche de clesti si 4 perechi de picioare subtiri', '8', '15', NULL);
+INSERT INTO public.questions (id, test_id, question_type, question, hint1, hint2, other_observations, question_number, answer, answer_explanations, wrong_answer1, wrong_answer2, image1) VALUES (8, 1, 'chimie', 'Ce sunt chinina si chitina?', '', NULL, 'Chinina poate fi otravitoare. Mai exista si keratina care se gaseste in corpul mai multor animale', 7, 'Sunt substante chimice ce se gasesc in natura, iar ca si cuvinte sunt paronime', 'Chinina este o substanta produsa de arborele de chinina, ar chitina se gaseste in crusta animalelor: insecte, paianjeni. Doua cuvinte sunt paronime cand suna aprope la fel dar au inteles diferit.', 'Sunt instrumente de masurat.', 'Sunt substante obtinute prin fierberea morcovilor. ', NULL);
+INSERT INTO public.questions (id, test_id, question_type, question, hint1, hint2, other_observations, question_number, answer, answer_explanations, wrong_answer1, wrong_answer2, image1) VALUES (10, 1, 'logica', 'Verisoara sotului meu are o sora pe nume Maria. Ce este Maria pentru sora sotului meu?', '', NULL, 'Familiarizarea cu termenii din arborelea genealogic si gandirea logica. ', 8, 'Verisoara', 'Fratii/surorile au aceasi grad de rudenie cu toate rudele.', 'Sora', 'Cumnata', NULL);
+INSERT INTO public.questions (id, test_id, question_type, question, hint1, hint2, other_observations, question_number, answer, answer_explanations, wrong_answer1, wrong_answer2, image1) VALUES (12, 1, 'matematica', '   Care este egalitatea corecta dintre cele de mai sus? ', 'Adunarea si inmultirea sunt comutative', NULL, 'Recapitularea materie scoalara. ', 11, 'Toate', '(a+b) la patrat este = (a+b)x(a+b)=axa+axb+bxa+bxb = axa+axb+axb+bxb = a^2+2xaxb+b^2', 'Nici una', 'b)', NULL);
+INSERT INTO public.questions (id, test_id, question_type, question, hint1, hint2, other_observations, question_number, answer, answer_explanations, wrong_answer1, wrong_answer2, image1) VALUES (7, 1, 'logica', 'Care este continuarea sirului de mai sus?', 'Se alterneaza marginile cu X si 0, iar centrul ramane neschimbat.', NULL, 'Intrebare de tipul celor din testele de inteligenta.', 18, 'c)', 'Chinina este o substanta produsa de arborele de chinina, ar chitina se gaseste in crusta animalelor: insecte, paianjeni. Doua cuvinte sunt paronime cand suna aprope la fel dar au inteles diferit.', 'a)', 'b)', NULL);
+INSERT INTO public.questions (id, test_id, question_type, question, hint1, hint2, other_observations, question_number, answer, answer_explanations, wrong_answer1, wrong_answer2, image1) VALUES (11, 1, 'atentie', 'Ce este diferit la casele din imagine?', ':)', NULL, ':) ', 20, 'Clanta', ':)', 'Hornul', 'Geamurile', NULL);
+INSERT INTO public.questions (id, test_id, question_type, question, hint1, hint2, other_observations, question_number, answer, answer_explanations, wrong_answer1, wrong_answer2, image1) VALUES (3, 1, 'astronomie', 'Care este diferenta intre asteroid, meteor, meteorit?', 'Meteoritul ajunge pe pamant si meteorul doar intra in atmosfera pamantului fara sa ajunga pe pamant', NULL, 'none', 3, '<html>Un METEOR este un asteroid de mici dimensiuni, ce intrã în atmosfera Pãmântului si arde complet în urma frecãrii cu atmosfera, 
+<br>
+		neatingând solul. Un METEORIT este un asteroid care intra in atmosfera pamantului, dar nu arde complet si care ajunge pe sol.</html>', '<html>Asteroizii sunt corpuri ceresti de mici dimensiuni, cu forma neregulata dar suficient de mari sa nu se confunde cu praful cosmic.<br>
+		Meteorul este un asteoroid sau alt corp care intra in atmosfera pamantului si se vaporizeaza. 
+		Meteoritul este un corp care intra in atmosfera pamantului dar nu se disipeaza si atinge solul. 
+		Mai exista si alte corpuri, cum ar fi cometele care sunt formate gheata, roca si praf. 
+		Ploaia de meteoriti sunt meteori care ramasi de la dare de comete. </html>', '', '', NULL);
+INSERT INTO public.questions (id, test_id, question_type, question, hint1, hint2, other_observations, question_number, answer, answer_explanations, wrong_answer1, wrong_answer2, image1) VALUES (5, 1, 'educatie civica', 'Legislatia din Romania prevede legi de protejare a angajatilor', '', NULL, 'In monitorul Oficial sunt publicate toate legile, ordonantele, hotararile de gurvern care intra in vigoare', 5, 'Da', 'Legea curenta aplicabila in Romania ce tine de siguranta si securitatea in munca ce protejeaza angajtul este Legea 319/2006 Hotararea de guvern 1425/2006 si Hotararea de Guvern 767/2016', 'Nu', 'Doar in anumite domenii. ', NULL);
+INSERT INTO public.questions (id, test_id, question_type, question, hint1, hint2, other_observations, question_number, answer, answer_explanations, wrong_answer1, wrong_answer2, image1) VALUES (18, 1, 'arhitectura', 'Un apartament are 4 incaperi. Dormitorul are lungimea de 5 metri si latiea de 3 metri. Bacataria are 8 metri patrati. Holul este un patrat cu latura e 1,5m si baia are 6 metri patrati.
+Care camera din imagine este bucataria?', 'Baia - 6mp < Bucataria - 8 mp < Dormitor -10 mp', NULL, 'Material menita sa familiarizeze persoanele cu schietele de apartament, sa dezvolte gandirea logica si matematica', 13, 'a)', 'Putem estima marimea camerelor acolo unde ne putem da seama. Holul este singurul patrat din imagine. 
+Dormitorul este cea mai mare incapere si baia cea mai mica (inafara de hol). 
+Cea ramasa este baia. ', 'c)', 'b)', NULL);
+INSERT INTO public.questions (id, test_id, question_type, question, hint1, hint2, other_observations, question_number, answer, answer_explanations, wrong_answer1, wrong_answer2, image1) VALUES (19, 1, 'geometrie', 'Dreapta notata cu h in imagine este perpendiculara pe planul α (planul bazei piramidei). Ce afirmatii sunt adevarate?', 'O dreapta perpendiculara pe un plan este perpendiculara pe toate dreptele planului.', NULL, 'geometrie in spatiu', 16, 'dreapta h este perpendiculara pe AO si orice alta dreapta sau segment din planul α.', 'In interir sunt 4 noduri si pe capete inca 2. Vedeti imaginea.', 'dreapta h este perpendiculara pe planul α, dar nu si pe dreptele continute de acesta', 'dreapta h nu mai poate fi perpendiculara pe alte plane', NULL);
+INSERT INTO public.questions (id, test_id, question_type, question, hint1, hint2, other_observations, question_number, answer, answer_explanations, wrong_answer1, wrong_answer2, image1) VALUES (20, 1, 'vocabular', 'Ce inseamna expresia "cu precadere"?', '', NULL, 'comunicare eficienta - sa avem aceleasi notiuni pentru a exista cat mai putine neintelegeri', 17, '', '', '', '', NULL);
+INSERT INTO public.questions (id, test_id, question_type, question, hint1, hint2, other_observations, question_number, answer, answer_explanations, wrong_answer1, wrong_answer2, image1) VALUES (9, 1, 'geografie', 'Catre ce indica sageata rosie a unei busole in emisfera sudica (fara sa fie foarte aproape de polul sus magnetic)?', 'Polul sus si polul nord (magnetice) sunt aceleasi indiferent de emisfera.', NULL, 'Menita sa ridice intrebari care nu au raspunsuri neaparat evidente. ', 19, 'Catre Polul Nord magnetic.', 'Nordul va fi atras de sus si sudul de nord, prin urmare acul care trebuie sa indice nordul (si care este magnetizat cu sud) va fi atras tot de polul nord. 
+O diferenta poate fi ceea ce se numeste inclinatie magnetica care poate atrage acul ce arata sud incat acesta se blocheaza in baza busolei si nu mai lasa instrumentul sa arate corect.', 'Catre polul sus magnetic.', 'Aleatoriu. ', NULL);
+INSERT INTO public.questions (id, test_id, question_type, question, hint1, hint2, other_observations, question_number, answer, answer_explanations, wrong_answer1, wrong_answer2, image1) VALUES (2, 1, 'vocabular', 'Invaziv are si intelesul de: ', 'Poate insemna cotropire, cucerire, intrare neasteptata sau nedorita', NULL, 'none', 2, 'Instalare a unui numar mare sau pe suprafata mare a unor plante sau animale', 'INVÁZIE, invazii, s. f. 1. Intrare neașteptată, năvălire a unei armate inamice într-o țară 
+		(cu scopul de a o cuceri, de a o subjuga); cotropire, invadare; 
+		p. ext. năvălire, venire neașteptată și în număr mare a cuiva sau a ceva într-un anumit loc. 
+		2. Apariție rapidă și masivă, cu caracter de calamitate, într-o regiune, a unor specii de plante sau de animale dăunătoare sau parazite. 
+		3. (Med.) Stadiu în evoluția ciclică a unei boli infecțioase, care durează de la apariția primelor semne de boală 
+		până la instalarea fenomenelor clinice caracteristice. – Din fr. invasion, lat. invasio.', 'Invizibil, nu se vede, transparent', 'Misterios, mistic', NULL);
+INSERT INTO public.questions (id, test_id, question_type, question, hint1, hint2, other_observations, question_number, answer, answer_explanations, wrong_answer1, wrong_answer2, image1) VALUES (22, 2, 'orientare', 'Care este imaginea care se potriveste in spatiu?', 'Urmareste liniile cum se continua', NULL, 'de aici: https://discovermyprofile.com/myIQ.html', 2, '1', '', '3', '2', NULL);
+INSERT INTO public.questions (id, test_id, question_type, question, hint1, hint2, other_observations, question_number, answer, answer_explanations, wrong_answer1, wrong_answer2, image1) VALUES (24, 2, 'lociga', 'Ce numar urmeaza in continuarea sirului: 3, 6, 3, 9, 3, 12, 3, ', '', NULL, '', 4, '15', 'sirul este alternativ 3 si multiplu de 3 in ordine crescatoare', '13', '12', NULL);
+INSERT INTO public.questions (id, test_id, question_type, question, hint1, hint2, other_observations, question_number, answer, answer_explanations, wrong_answer1, wrong_answer2, image1) VALUES (23, 2, 'logica', 'Care este imaginea care se potriveste in spatiu?', 'incercati sa va imaginati cum se continua liniile in spatiul lipsa', NULL, 'tip de intrebare existenta si in testele de inteligenta', 3, '1', 'sirul este alternativ 3 si multiplu de 3 in ordine crescatoare', '3', '2', 'IndianLanguage.jpg');
+INSERT INTO public.questions (id, test_id, question_type, question, hint1, hint2, other_observations, question_number, answer, answer_explanations, wrong_answer1, wrong_answer2, image1) VALUES (21, 2, 'general', 'Care este cuvantul care nu se potreveste din sir: Sanskrit, Hindi, Pendjabi, Urdu, Sindhi, Farsi?', 'Not Urdu', NULL, 'de aici: https://www.intelligencetest.com/questions/gknowledge/1.html', 1, 'Farsi', 'Farsi belongs to the Iranian branch of languages. All the rest belong to the Indo-Aryan branch.', 'Urdu', 'Sindhi', 'IndianLanguage.jpg');
+
+
+--
+-- TOC entry 2858 (class 0 OID 32781)
+-- Dependencies: 199
+-- Data for Name: tests; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.tests (id, test_name, observations, creation_date, test_type, number_of_questions, modification_date) VALUES (1, 'Test1', 'Creat pentru testarea aplicatiei', '2019-04-10', 'general', 20, '2019-04-23');
+INSERT INTO public.tests (id, test_name, observations, creation_date, test_type, number_of_questions, modification_date) VALUES (3, 'Petrecere Andrei', 'Petrecere 23 aprilie 2019', '2019-04-23', 'escape', 5, '2019-04-23');
+INSERT INTO public.tests (id, test_name, observations, creation_date, test_type, number_of_questions, modification_date) VALUES (2, 'Test2', 'Creat pentru testarea aplicatiei runda 2', '2019-04-23', 'general', 4, '2019-04-25');
+
+
+--
+-- TOC entry 2860 (class 0 OID 32792)
+-- Dependencies: 201
+-- Data for Name: visitor_test_result; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2856 (class 0 OID 32773)
+-- Dependencies: 197
+-- Data for Name: visitors; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2864 (class 0 OID 32827)
+-- Dependencies: 205
+-- Data for Name: wrong_answers; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2876 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: questions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.questions_id_seq', 24, true);
+
+
+--
+-- TOC entry 2877 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: test_results_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.test_results_id_seq', 3, true);
+
+
+--
+-- TOC entry 2878 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: visitor_test_result_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.visitor_test_result_id_seq', 1, false);
+
+
+--
+-- TOC entry 2879 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: vizitors_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.vizitors_id_seq', 1, false);
+
+
+--
+-- TOC entry 2880 (class 0 OID 0)
+-- Dependencies: 204
+-- Name: wrong_answers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.wrong_answers_id_seq', 1, false);
+
+
+--
+-- TOC entry 2727 (class 2606 OID 32818)
+-- Name: questions questions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.questions
+    ADD CONSTRAINT questions_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2723 (class 2606 OID 32789)
+-- Name: tests test_results_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tests
+    ADD CONSTRAINT test_results_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2725 (class 2606 OID 32797)
+-- Name: visitor_test_result visitor_test_result_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.visitor_test_result
+    ADD CONSTRAINT visitor_test_result_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2721 (class 2606 OID 32778)
+-- Name: visitors vizitors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.visitors
+    ADD CONSTRAINT vizitors_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2729 (class 2606 OID 32835)
+-- Name: wrong_answers wrong_answers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.wrong_answers
+    ADD CONSTRAINT wrong_answers_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2732 (class 2606 OID 32819)
+-- Name: questions test_question_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.questions
+    ADD CONSTRAINT test_question_fk FOREIGN KEY (test_id) REFERENCES public.tests(id);
+
+
+--
+-- TOC entry 2731 (class 2606 OID 32803)
+-- Name: visitor_test_result test_results_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.visitor_test_result
+    ADD CONSTRAINT test_results_fk FOREIGN KEY (test_id) REFERENCES public.tests(id);
+
+
+--
+-- TOC entry 2730 (class 2606 OID 32798)
+-- Name: visitor_test_result visitor_test_result_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.visitor_test_result
+    ADD CONSTRAINT visitor_test_result_fk FOREIGN KEY (visitor_id) REFERENCES public.visitors(id);
+
+
+--
+-- TOC entry 2733 (class 2606 OID 32836)
+-- Name: wrong_answers wrong_aswers_for_question_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.wrong_answers
+    ADD CONSTRAINT wrong_aswers_for_question_fk FOREIGN KEY (question_id) REFERENCES public.questions(id);
+
+
+-- Completed on 2019-06-15 16:34:16
+
+--
+-- PostgreSQL database dump complete
+--
+
